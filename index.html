@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PrettyUnderThree</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: #fff5f8;
+    }
+
+    header {
+      background: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      color: #ff4da6;
+      margin: 0;
+    }
+
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+      background: linear-gradient(to right, #ff9acb, #ffcce6);
+      color: white;
+    }
+
+    .hero h2 {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      width: 200px;
+      padding: 15px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: 0.2s;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .price {
+      color: #ff4da6;
+      font-weight: bold;
+    }
+
+    button {
+      background: #ff4da6;
+      border: none;
+      padding: 10px;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: white;
+      margin-top: 30px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>PrettyUnderThree 💖</h1>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Shop</a>
+    <a href="#">Contact</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <h2>Beauty for $3 & Under</h2>
+  <p>Look pretty without breaking the bank ✨</p>
+</div>
+
+<div class="products">
+
+  <div class="card">
+    <img src="https://via.placeholder.com/200">
+    <h3>Lip Gloss</h3>
+    <p class="price">$3.00</p>
+    <button onclick="buy()">Buy Now</button>
+  </div>
+
+  <div class="card">
+    <img src="https://via.placeholder.com/200">
+    <h3>Makeup Brush</h3>
+    <p class="price">$3.00</p>
+    <button onclick="buy()">Buy Now</button>
+  </div>
+
+  <div class="card">
+    <img src="https://via.placeholder.com/200">
+    <h3>Face Mask</h3>
+    <p class="price">$3.00</p>
+    <button onclick="buy()">Buy Now</button>
+  </div>
+
+</div>
+
+<footer>
+  © 2026 PrettyUnderThree | Beauty for $3 & under 💖
+</footer>
+
+<script>
+  function buy() {
+    alert("Checkout coming soon 💖");
+  }
+</script>
+
+</body>
+</html>
