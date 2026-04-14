@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>YSL Lip Gloss | PrettyUnderThree</title>
+  <title>Lip Gloss | PrettyUnderThree</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
@@ -15,9 +15,8 @@
       background: black;
       color: gold;
       padding: 15px;
-      font-size: 22px;
-      font-weight: bold;
       text-align: center;
+      font-size: 22px;
     }
 
     .container {
@@ -26,6 +25,10 @@
       padding: 30px;
       gap: 40px;
       justify-content: center;
+    }
+
+    .gallery {
+      text-align: center;
     }
 
     .main-img {
@@ -37,16 +40,33 @@
       padding: 10px;
     }
 
-    .thumb {
-      width: 60px;
-      height: 60px;
-      object-fit: cover;
+    button {
+      padding: 10px;
       margin: 5px;
-      border-radius: 5px;
       cursor: pointer;
     }
 
-    .middle { max-width: 450px; }
+    #dots {
+      margin-top: 10px;
+    }
+
+    .dot {
+      height: 10px;
+      width: 10px;
+      margin: 5px;
+      background: #bbb;
+      display: inline-block;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .active-dot {
+      background: #ff4da6;
+    }
+
+    .middle {
+      max-width: 400px;
+    }
 
     .price {
       color: #b12704;
@@ -58,86 +78,78 @@
       background: white;
       padding: 20px;
       border-radius: 10px;
-      width: 280px;
+      width: 250px;
     }
 
-    button {
+    .right select, .right input {
       width: 100%;
-      padding: 12px;
+      padding: 10px;
       margin-top: 10px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
     }
 
-    .buy { background: #ffa41c; }
-    .cart { background: #ffd814; }
+    .buy { background: #ffa41c; border: none; }
+    .cart { background: #ffd814; border: none; }
+
+    .section {
+      background: white;
+      margin: 20px;
+      padding: 20px;
+      border-radius: 10px;
+    }
   </style>
 </head>
 
 <body>
 
-<header>PrettyUnderThree ✨ YSL Collection</header>
+<header>PrettyUnderThree ✨</header>
 
 <div class="container">
 
-  <!-- IMAGE -->
-  <div>
+  <!-- IMAGE GALLERY -->
+  <div class="gallery">
+
     <img id="productImage" class="main-img">
 
     <div>
-      <img class="thumb" onclick="setImg(0)">
-      <img class="thumb" onclick="setImg(1)">
-      <img class="thumb" onclick="setImg(2)">
-      <img class="thumb" onclick="setImg(3)">
-      <img class="thumb" onclick="setImg(4)">
+      <button onclick="prevImg()">⬅</button>
+      <button onclick="nextImg()">➡</button>
     </div>
+
+    <div id="dots"></div>
+
   </div>
 
   <!-- DETAILS -->
   <div class="middle">
-    <h2>YSL-Inspired Loveshine Lip Gloss Set (3 Pack)</h2>
+    <h2>Luxury Glossy Lip Set (3 Pack)</h2>
     <div class="price">$3.00</div>
 
     <p>
-      Get the luxury glow of high-end beauty with this YSL-inspired lip gloss set 💄✨
-      Inspired by the iconic glosses from Yves Saint Laurent Beauty, this formula
-      delivers ultra-glassy shine, hydration, and a fuller-looking lip effect.
+      Get that luxury glossy look inspired by high-end beauty brands 💄✨
+      This lip gloss set delivers shine, hydration, and a fuller lip effect.
     </p>
 
-    <h3>✨ Product Details</h3>
+    <h3>Details:</h3>
     <ul>
-      <li>💄 3 glosses per set</li>
-      <li>📏 5ml each (15ml total)</li>
-      <li>✨ High-shine glass finish</li>
-      <li>💧 Non-sticky, smooth texture</li>
-      <li>💋 Plumping effect look</li>
+      <li>3 glosses per set</li>
+      <li>5ml each</li>
+      <li>High shine</li>
+      <li>Non-sticky</li>
     </ul>
-
-    <h3>🌿 Ingredients</h3>
-    <p>
-      Hyaluronic Acid, Vitamin E, Natural Oils, Flavor Extracts, Pigments.
-    </p>
   </div>
 
-  <!-- BUY -->
+  <!-- BUY BOX -->
   <div class="right">
     <div class="price">$3.00</div>
 
-    <p style="color:green;">In Stock ✔</p>
-
     <label>Choose Shade:</label>
     <select>
-      <option>01 Thunder Glow (Clear Shine)</option>
-      <option>02 Lucky Pink</option>
-      <option>03 Mellow Nude</option>
-      <option>04 Honey Love</option>
-      <option>05 California Peach</option>
-      <option>06 Espresso Gloss</option>
-      <option>07 Strawberry Shine</option>
-      <option>08 Purple Dream</option>
-      <option>09 Cherry Flash</option>
-      <option>44 Nude Lavish</option>
+      <option>Clear Shine</option>
+      <option>Pink Gloss</option>
+      <option>Cherry Red</option>
+      <option>Nude Glow</option>
+      <option>Peach Gloss</option>
+      <option>Berry Gloss</option>
     </select>
 
     <label>Quantity:</label>
@@ -149,31 +161,33 @@
 
 </div>
 
-<!-- DESCRIPTION -->
-<div style="background:white; margin:20px; padding:20px; border-radius:10px;">
-  <h3>💖 Luxury Product Description</h3>
-
+<div class="section">
+  <h3>Description 💖</h3>
   <p>
-    Inspired by the iconic YSL Loveshine Lip Oil Gloss, this product brings the same
-    high-fashion shine and hydration into an affordable, everyday essential. Designed
-    to mimic the luxury experience, this gloss delivers a smooth, glass-like finish that
-    instantly enhances your natural lip color while giving your lips a fuller,
-    plumped appearance.
+    Experience the ultimate lip glow with this ultra-luxury high-shine lip gloss set ✨ 
+    Designed to deliver a smooth, glass-like finish, this formula enhances your natural 
+    lips while adding a radiant, fuller-looking effect. Whether you're going for a soft 
+    everyday look or a bold, glossy glam, this gloss gives you that effortless, polished 
+    finish every time.
     <br><br>
-    The formula is enriched with hydrating ingredients like hyaluronic acid and
-    nourishing oils, helping your lips stay soft, moisturized, and glossy for hours.
-    Real YSL glosses are known for delivering up to 8 hours of shine and 24-hour hydration,
-    with a lightweight, non-sticky feel that makes them comfortable for all-day wear :contentReference[oaicite:1]{index=1}.
+    The lightweight formula glides on seamlessly, coating your lips in a rich layer of 
+    shine without feeling sticky or heavy. Infused with hydrating ingredients such as 
+    nourishing oils and Vitamin E, it helps keep your lips feeling soft, moisturized, 
+    and comfortable throughout the day. The glossy texture reflects light beautifully, 
+    creating that signature “wet-look” shine seen in high-end beauty products.
     <br><br>
-    This set captures that same vibe—giving you a juicy, radiant finish perfect for
-    everyday wear, school, or going out. The gloss glides on effortlessly and can be
-    worn alone for a natural shine or layered over lipstick for a bold, glamorous look.
+    Each set includes three carefully selected shades designed to complement a wide 
+    range of skin tones. From soft nude tones to vibrant pinks and deeper shades, you 
+    can easily switch up your look depending on your mood or occasion. Wear it alone 
+    for a natural glossy finish, or layer it over lipstick to add extra dimension and shine.
     <br><br>
-    With multiple shades included, you can switch between soft nudes, pinks, and bold
-    tones to match your style. Compact and easy to carry, this set is perfect for
-    touch-ups anytime, anywhere.
+    The compact, travel-friendly packaging makes it easy to carry in your bag, so you 
+    can reapply anytime for a fresh, glossy look. Perfect for school, everyday wear, 
+    nights out, or special occasions, this set gives you versatility, style, and a 
+    high-end beauty feel all in one.
     <br><br>
-    PrettyUnderThree brings you the luxury look—without the luxury price 💄✨
+    If you love that smooth, hydrated, ultra-glossy lip look, this set is a must-have 
+    addition to your collection 💄✨
   </p>
 </div>
 
@@ -191,6 +205,17 @@ let index = 0;
 
 function showImage() {
   document.getElementById("productImage").src = images[index];
+  updateDots();
+}
+
+function nextImg() {
+  index = (index + 1) % images.length;
+  showImage();
+}
+
+function prevImg() {
+  index = (index - 1 + images.length) % images.length;
+  showImage();
 }
 
 function setImg(i) {
@@ -198,10 +223,25 @@ function setImg(i) {
   showImage();
 }
 
-document.querySelectorAll(".thumb").forEach((img, i) => {
-  img.src = images[i];
+// CREATE DOTS
+const dotsContainer = document.getElementById("dots");
+
+images.forEach((_, i) => {
+  const dot = document.createElement("span");
+  dot.classList.add("dot");
+  dot.onclick = () => setImg(i);
+  dotsContainer.appendChild(dot);
 });
 
+function updateDots() {
+  const dots = document.querySelectorAll(".dot");
+  dots.forEach((d, i) => {
+    d.classList.remove("active-dot");
+    if (i === index) d.classList.add("active-dot");
+  });
+}
+
+// START
 showImage();
 </script>
 
