@@ -14,58 +14,56 @@
     header {
       background: #131921;
       color: white;
-      padding: 15px;
+      padding: 15px 20px;
       font-size: 20px;
+      font-weight: bold;
     }
 
     .container {
       display: flex;
       flex-wrap: wrap;
       padding: 30px;
-      gap: 30px;
+      gap: 40px;
       justify-content: center;
     }
 
-    .left img {
-      width: 300px;
+    .gallery {
+      text-align: center;
+    }
+
+    .gallery img {
+      width: 320px;
       border-radius: 10px;
       background: white;
       padding: 10px;
     }
 
+    .arrows button {
+      margin: 10px;
+      padding: 10px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
     .middle {
-      max-width: 400px;
-    }
-
-    .middle h2 {
-      margin-top: 0;
-    }
-
-    .rating {
-      color: orange;
-      margin: 10px 0;
+      max-width: 450px;
     }
 
     .price {
       color: #b12704;
-      font-size: 24px;
+      font-size: 26px;
       font-weight: bold;
-    }
-
-    .description {
-      margin-top: 15px;
-      line-height: 1.5;
     }
 
     .right {
       background: white;
       padding: 20px;
       border-radius: 10px;
-      width: 250px;
+      width: 280px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
-    .right select {
+    .right select, .right input {
       width: 100%;
       padding: 10px;
       margin-top: 10px;
@@ -74,68 +72,74 @@
     .buy-btn {
       width: 100%;
       padding: 12px;
-      margin-top: 15px;
+      margin-top: 10px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      font-size: 16px;
     }
 
-    .buy-now {
-      background: #ffa41c;
-    }
+    .buy-now { background: #ffa41c; }
+    .add-cart { background: #ffd814; }
 
-    .add-cart {
-      background: #ffd814;
-    }
-
-    .buy-btn:hover {
-      opacity: 0.9;
+    .section {
+      background: white;
+      margin: 20px;
+      padding: 20px;
+      border-radius: 10px;
     }
   </style>
 </head>
 
 <body>
 
-<header>
-  PrettyUnderThree 💖
-</header>
+<header>PrettyUnderThree 💖</header>
 
 <div class="container">
 
-  <!-- LEFT: IMAGE -->
-  <div class="left">
-    <img src="https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400">
+  <!-- IMAGE GALLERY -->
+  <div class="gallery">
+    <img id="productImage" src="https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400">
+
+    <div class="arrows">
+      <button onclick="prevImg()">⬅</button>
+      <button onclick="nextImg()">➡</button>
+    </div>
   </div>
 
-  <!-- MIDDLE: DETAILS -->
+  <!-- DETAILS -->
   <div class="middle">
     <h2>3-Pack Lip Gloss Set</h2>
-
-    <div class="rating">
-      ⭐⭐⭐⭐☆ (124 reviews)
-    </div>
-
     <div class="price">$3.00</div>
 
-    <p class="description">
-      Get glossy for less 💖 This 3-pack lip gloss set includes beautiful shades
-      that give your lips a smooth, shiny finish. Perfect for everyday wear,
-      school, or going out ✨  
-      <br><br>
-      ✔ Non-sticky formula  
-      ✔ Long-lasting shine  
-      ✔ Cute & travel-friendly  
+    <p>
+      Elevate your glow 💖 with our ultra-shiny 3-pack lip gloss set. Designed
+      to deliver hydration, shine, and a soft plump look—without the sticky feel.
+    </p>
+
+    <h3>Product Details:</h3>
+    <ul>
+      <li>💄 Includes: 3 lip gloss tubes per set</li>
+      <li>📏 Size: 5ml per tube (15ml total)</li>
+      <li>✨ Finish: High-shine / glossy</li>
+      <li>💧 Texture: Smooth, non-sticky</li>
+      <li>🎯 Use: Everyday wear, casual & glam looks</li>
+    </ul>
+
+    <h3>Ingredients:</h3>
+    <p>
+      Mineral Oil, Polybutene, Hydrogenated Polyisobutene,
+      Vitamin E (Tocopheryl Acetate), Flavor, Color Pigments.
     </p>
   </div>
 
-  <!-- RIGHT: BUY BOX -->
+  <!-- BUY BOX -->
   <div class="right">
     <div class="price">$3.00</div>
 
-    <p>FREE delivery</p>
+    <p style="color:green;">In Stock ✔</p>
+    <p>FREE delivery 2–5 days</p>
 
-    <label>Choose your style:</label>
+    <label>Choose Style:</label>
     <select>
       <option>Clear Shine</option>
       <option>Pink Gloss</option>
@@ -149,13 +153,48 @@
       <option>Chocolate Gloss</option>
     </select>
 
+    <label>Quantity:</label>
+    <input type="number" value="1" min="1">
+
     <button class="buy-btn buy-now" onclick="buyNow()">Buy Now</button>
     <button class="buy-btn add-cart" onclick="addCart()">Add to Cart</button>
   </div>
 
 </div>
 
+<!-- EXTRA INFO -->
+<div class="section">
+  <h3>Why You'll Love It 💖</h3>
+  <p>
+    Perfect for beauty lovers on a budget, this lip gloss set gives you multiple
+    looks for one low price. Whether you're going for natural shine or bold glam,
+    PrettyUnderThree has you covered ✨
+  </p>
+</div>
+
 <script>
+  const images = [
+    "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400",
+    "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400",
+    "https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?w=400"
+  ];
+
+  let index = 0;
+
+  function showImage() {
+    document.getElementById("productImage").src = images[index];
+  }
+
+  function nextImg() {
+    index = (index + 1) % images.length;
+    showImage();
+  }
+
+  function prevImg() {
+    index = (index - 1 + images.length) % images.length;
+    showImage();
+  }
+
   function buyNow() {
     alert("Checkout coming soon 💖");
   }
