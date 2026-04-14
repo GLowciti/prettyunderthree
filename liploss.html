@@ -6,59 +6,91 @@
 
   <style>
     body {
-      font-family: Arial;
+      font-family: Arial, sans-serif;
       margin: 0;
-      background: #fff5f8;
+      background: #f3f3f3;
     }
 
     header {
-      background: #ff4da6;
+      background: #131921;
       color: white;
       padding: 15px;
-      text-align: center;
-      font-size: 22px;
+      font-size: 20px;
     }
 
     .container {
+      display: flex;
+      flex-wrap: wrap;
       padding: 30px;
-      text-align: center;
+      gap: 30px;
+      justify-content: center;
     }
 
-    img {
-      width: 250px;
-      border-radius: 15px;
+    .left img {
+      width: 300px;
+      border-radius: 10px;
+      background: white;
+      padding: 10px;
     }
 
-    h2 {
-      color: #ff4da6;
+    .middle {
+      max-width: 400px;
+    }
+
+    .middle h2 {
+      margin-top: 0;
+    }
+
+    .rating {
+      color: orange;
+      margin: 10px 0;
     }
 
     .price {
-      font-size: 22px;
+      color: #b12704;
+      font-size: 24px;
       font-weight: bold;
-      color: #333;
     }
 
-    select {
-      padding: 10px;
+    .description {
       margin-top: 15px;
-      width: 200px;
-      border-radius: 5px;
+      line-height: 1.5;
     }
 
-    button {
-      margin-top: 20px;
-      padding: 12px 20px;
-      background: #ff4da6;
-      color: white;
+    .right {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 250px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .right select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+    }
+
+    .buy-btn {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
       font-size: 16px;
     }
 
-    button:hover {
-      background: #ff1a8c;
+    .buy-now {
+      background: #ffa41c;
+    }
+
+    .add-cart {
+      background: #ffd814;
+    }
+
+    .buy-btn:hover {
+      opacity: 0.9;
     }
   </style>
 </head>
@@ -66,48 +98,70 @@
 <body>
 
 <header>
-  💖 PrettyUnderThree
+  PrettyUnderThree 💖
 </header>
 
 <div class="container">
 
-  <img src="https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400">
+  <!-- LEFT: IMAGE -->
+  <div class="left">
+    <img src="https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400">
+  </div>
 
-  <h2>3-Pack Lip Gloss Set</h2>
+  <!-- MIDDLE: DETAILS -->
+  <div class="middle">
+    <h2>3-Pack Lip Gloss Set</h2>
 
-  <p class="price">$3.00</p>
+    <div class="rating">
+      ⭐⭐⭐⭐☆ (124 reviews)
+    </div>
 
-  <p>
-    Get glossy for less 💖 This lip gloss set includes 3 beautiful shades 
-    that give your lips a smooth, shiny finish. Perfect for everyday wear, 
-    school, or going out with friends ✨  
-    Lightweight, non-sticky, and super cute!
-  </p>
+    <div class="price">$3.00</div>
 
-  <h3>Choose Your Style:</h3>
+    <p class="description">
+      Get glossy for less 💖 This 3-pack lip gloss set includes beautiful shades
+      that give your lips a smooth, shiny finish. Perfect for everyday wear,
+      school, or going out ✨  
+      <br><br>
+      ✔ Non-sticky formula  
+      ✔ Long-lasting shine  
+      ✔ Cute & travel-friendly  
+    </p>
+  </div>
 
-  <select>
-    <option>Clear Shine</option>
-    <option>Pink Gloss</option>
-    <option>Cherry Red</option>
-    <option>Nude Glow</option>
-    <option>Peachy Gloss</option>
-    <option>Glitter Sparkle</option>
-    <option>Rose Tint</option>
-    <option>Berry Blast</option>
-    <option>Coral Shine</option>
-    <option>Chocolate Gloss</option>
-  </select>
+  <!-- RIGHT: BUY BOX -->
+  <div class="right">
+    <div class="price">$3.00</div>
 
-  <br>
+    <p>FREE delivery</p>
 
-  <button onclick="buyNow()">Buy Now</button>
+    <label>Choose your style:</label>
+    <select>
+      <option>Clear Shine</option>
+      <option>Pink Gloss</option>
+      <option>Cherry Red</option>
+      <option>Nude Glow</option>
+      <option>Peachy Gloss</option>
+      <option>Glitter Sparkle</option>
+      <option>Rose Tint</option>
+      <option>Berry Blast</option>
+      <option>Coral Shine</option>
+      <option>Chocolate Gloss</option>
+    </select>
+
+    <button class="buy-btn buy-now" onclick="buyNow()">Buy Now</button>
+    <button class="buy-btn add-cart" onclick="addCart()">Add to Cart</button>
+  </div>
 
 </div>
 
 <script>
   function buyNow() {
     alert("Checkout coming soon 💖");
+  }
+
+  function addCart() {
+    alert("Added to cart 🛒");
   }
 </script>
 
