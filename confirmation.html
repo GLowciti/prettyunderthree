@@ -210,20 +210,38 @@
 <script>
 const data = JSON.parse(localStorage.getItem("orderData"));
 
-if(data){
+if (data) {
+  // Order info
   orderNumber.innerText = data.orderNumber;
   date.innerText = data.date;
   time.innerText = data.time;
-  delivery.innerText = data.delivery;
 
+  // ✅ Calculate delivery date (order date + 3 days)
+  let orderDate = new Date(data.date);
+
+  // Fallback if parsing fails
+  if (isNaN(orderDate)) {
+    orderDate = new Date();
+  }
+
+  orderDate.setDate(orderDate.getDate() + 3);
+
+  let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  let deliveryDate = orderDate.toLocaleDateString(undefined, options);
+
+  delivery.innerText = deliveryDate;
+
+  // Address info
   name.innerText = data.name;
   address.innerText = data.address;
   cityStateZip.innerText = data.city + ", " + data.state + " " + data.zip;
   email.innerText = data.email;
 
+  // Payment + total
   cardLast4.innerText = data.cardLast4;
   total.innerText = data.total;
 
+  // Items
   let html = "";
 
   data.items.forEach(item => {
@@ -241,7 +259,7 @@ if(data){
   items.innerHTML = html;
 }
 
-function home(){
+function home() {
   window.location.href = "index.html";
 }
 </script>
