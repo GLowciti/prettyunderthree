@@ -45,7 +45,6 @@
       border-radius: 8px;
       padding: 15px;
       margin-top: 15px;
-      animation: fadeIn 0.8s ease;
     }
 
     .row {
@@ -83,16 +82,6 @@
       border-radius: 6px;
       font-weight: bold;
       cursor: pointer;
-      transition: 0.2s;
-    }
-
-    button:hover {
-      background: #f7ca00;
-    }
-
-    /* PROGRESS BAR */
-    .progress-container {
-      margin-top: 15px;
     }
 
     .progress-bar {
@@ -119,7 +108,6 @@
       display: flex;
       justify-content: space-between;
       font-size: 12px;
-      text-align: center;
     }
 
     .step.active {
@@ -127,11 +115,11 @@
       font-weight: bold;
     }
 
-    .tracking-box {
+    .address-box {
       background: #f7fafa;
       padding: 12px;
       border-radius: 6px;
-      margin-top: 10px;
+      line-height: 1.5;
     }
 
     @media (max-width: 600px) {
@@ -152,21 +140,18 @@
   <div class="success">✅ Order placed successfully!</div>
   <p>Estimated delivery: <strong id="delivery"></strong></p>
 
-  <!-- PROGRESS TRACKING -->
+  <!-- PROGRESS -->
   <div class="section">
     <h3>Delivery Progress</h3>
+    <div class="progress-bar">
+      <div class="progress-fill"></div>
+    </div>
 
-    <div class="progress-container">
-      <div class="progress-bar">
-        <div class="progress-fill"></div>
-      </div>
-
-      <div class="steps">
-        <div class="step active">Ordered</div>
-        <div class="step active">Shipped</div>
-        <div class="step active">Out for Delivery</div>
-        <div class="step">Delivered</div>
-      </div>
+    <div class="steps">
+      <div class="step active">Ordered</div>
+      <div class="step active">Shipped</div>
+      <div class="step active">Out for Delivery</div>
+      <div class="step">Delivered</div>
     </div>
   </div>
 
@@ -178,21 +163,16 @@
     <div class="row"><span>Time</span><span id="time"></span></div>
   </div>
 
-  <!-- TRACKING -->
+  <!-- SHIPPING ADDRESS -->
   <div class="section">
-    <h3>Tracking</h3>
+    <h3>Shipping Address</h3>
 
-    <div class="tracking-box">
-      Tracking #: <strong id="tracking"></strong>
-      <button onclick="track()">Track Package</button>
+    <div class="address-box">
+      <div id="name"></div>
+      <div id="address"></div>
+      <div id="cityStateZip"></div>
+      <div id="email"></div>
     </div>
-  </div>
-
-  <!-- SHIPPING -->
-  <div class="section">
-    <h3>Ship To</h3>
-    <p id="name"></p>
-    <p id="email"></p>
   </div>
 
   <!-- ITEMS -->
@@ -235,10 +215,13 @@ if(data){
   date.innerText = data.date;
   time.innerText = data.time;
   delivery.innerText = data.delivery;
-  tracking.innerText = data.tracking;
-  cardLast4.innerText = data.cardLast4;
+
   name.innerText = data.name;
+  address.innerText = data.address;
+  cityStateZip.innerText = data.city + ", " + data.state + " " + data.zip;
   email.innerText = data.email;
+
+  cardLast4.innerText = data.cardLast4;
   total.innerText = data.total;
 
   let html = "";
@@ -258,13 +241,8 @@ if(data){
   items.innerHTML = html;
 }
 
-// BUTTONS
 function home(){
   window.location.href = "index.html";
-}
-
-function track(){
-  alert("Tracking page coming soon 📦");
 }
 </script>
 
