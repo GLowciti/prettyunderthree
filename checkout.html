@@ -271,11 +271,25 @@ function placeOrder(){
     alert("Invalid CVV"); return;
   }
 
-  if(!bnameEl.value||!baddressEl.value||!bcityEl.value||!bstateEl.value||!bzipEl.value){
+  if(!bnameEl.value || !baddressEl.value || !bcityEl.value || !bstateEl.value || !bzipEl.value){
     alert("Billing address required"); return;
   }
 
-  alert("Payment Approved ✅");
+  // CREATE ORDER DATA
+  const orderNumber = "PU3-" + Math.floor(100000 + Math.random() * 900000);
+  const now = new Date();
+
+  localStorage.setItem("orderData", JSON.stringify({
+    orderNumber: orderNumber,
+    name: nameEl.value,
+    email: emailEl.value,
+    total: "$4.00",
+    date: now.toLocaleDateString(),
+    time: now.toLocaleTimeString()
+  }));
+
+  // REDIRECT
+  window.location.href = "confirmation.html";
 }
 
 // ELEMENTS
