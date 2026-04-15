@@ -1,4 +1,4 @@
-<!DOCTY<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
   <title>Secure Checkout | PrettyUnderThree</title>
@@ -210,13 +210,13 @@ function getCardType(n){
 }
 
 function detectCard(){
-  let val=cardEl.value;
-  cardType.innerHTML=val ? "Card Type: "+getCardType(val) : "";
+  const val = cardEl.value;
+  cardType.innerHTML = val ? "Card Type: " + getCardType(val) : "";
 }
 
 // BILLING TOGGLE
 function toggleBilling(){
-  billingFields.style.display = sameAsShipping.checked ? "none":"block";
+  billingFields.style.display = sameAsShipping.checked ? "none" : "block";
 }
 
 // STEP CHANGE
@@ -244,7 +244,7 @@ function backToShipping(){
   step1.classList.add("active");
 }
 
-// FINAL ORDER + REDIRECT
+// FINAL ORDER
 function placeOrder(){
   let card=cardEl.value.trim();
   let exp=expEl.value.trim();
@@ -274,26 +274,30 @@ function placeOrder(){
   window.location.href = "confirmation.html";
 }
 
-// ELEMENTS
-const emailEl=email;
-const nameEl=name;
-const addressEl=address;
-const cityEl=city;
-const stateEl=state;
-const zipEl=zip;
+// ELEMENTS (FIXED)
+const emailEl = document.getElementById("email");
+const nameEl = document.getElementById("name");
+const addressEl = document.getElementById("address");
+const cityEl = document.getElementById("city");
+const stateEl = document.getElementById("state");
+const zipEl = document.getElementById("zip");
 
-const cardEl=card;
-const expEl=exp;
-const cvvEl=cvv;
+const cardEl = document.getElementById("card");
+const expEl = document.getElementById("exp");
+const cvvEl = document.getElementById("cvv");
 
-const bnameEl=bname;
-const baddressEl=baddress;
-const bcityEl=bcity;
-const bstateEl=bstate;
-const bzipEl=bzip;
+const bnameEl = document.getElementById("bname");
+const baddressEl = document.getElementById("baddress");
+const bcityEl = document.getElementById("bcity");
+const bstateEl = document.getElementById("bstate");
+const bzipEl = document.getElementById("bzip");
 
-const step1=step1;
-const step2=step2;
+const step1 = document.getElementById("step1");
+const step2 = document.getElementById("step2");
+
+const sameAsShipping = document.getElementById("sameAsShipping");
+const billingFields = document.getElementById("billingFields");
+const cardType = document.getElementById("cardType");
 </script>
 
 </body>
