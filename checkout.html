@@ -142,24 +142,17 @@
         <input type="text" id="cardname" placeholder="Name on Card">
       </div>
 
-      <!-- BILLING -->
+      <!-- BILLING (ALWAYS VISIBLE) -->
       <div class="box">
-        <h4>Billing Address</h4>
+        <h4>Billing Address (Required)</h4>
 
-        <label style="display:flex; gap:8px;">
-          <input type="checkbox" id="sameAsShipping" checked onchange="toggleBilling()">
-          Same as shipping address
-        </label>
+        <input type="text" id="bname" placeholder="Full Name">
+        <input type="text" id="baddress" placeholder="Billing Address">
+        <input type="text" id="bcity" placeholder="City">
 
-        <div id="billingFields" style="display:none;">
-          <input type="text" id="bname" placeholder="Full Name">
-          <input type="text" id="baddress" placeholder="Billing Address">
-          <input type="text" id="bcity" placeholder="City">
-
-          <div style="display:flex; gap:10px;">
-            <input type="text" id="bstate" placeholder="State">
-            <input type="text" id="bzip" placeholder="ZIP">
-          </div>
+        <div style="display:flex; gap:10px;">
+          <input type="text" id="bstate" placeholder="State (CA)">
+          <input type="text" id="bzip" placeholder="ZIP Code">
         </div>
       </div>
 
@@ -193,7 +186,7 @@ function isValidState(s){return /^[A-Za-z]{2}$/.test(s);}
 function isValidCVV(c){return /^\d{3,4}$/.test(c);}
 function isValidExp(e){return /^(0[1-9]|1[0-2])\/\d{2}$/.test(e);}
 
-// LUHN
+// LUHN CHECK
 function luhnCheck(card){
   let sum=0,flip=false;
   card=card.replace(/\D/g,'');
@@ -219,31 +212,21 @@ function detectCard(){
   cardType.innerHTML = cardEl.value ? "Card: "+getCardType(cardEl.value) : "";
 }
 
-// BILLING
-function toggleBilling(){
-  if(sameAsShipping.checked){
-    billingFields.style.display="none";
-
-    bnameEl.value=nameEl.value;
-    baddressEl.value=addressEl.value;
-    bcityEl.value=cityEl.value;
-    bstateEl.value=stateEl.value;
-    bzipEl.value=zipEl.value;
-
-  } else {
-    billingFields.style.display="block";
-
-    bnameEl.value="";
-    baddressEl.value="";
-    bcityEl.value="";
-    bstateEl.value="";
-    bzipEl.value="";
-  }
+// AUTO-FILL BILLING
+function autoFillBilling(){
+  bnameEl.value=nameEl.value;
+  baddressEl.value=addressEl.value;
+  bcityEl.value=cityEl.value;
+  bstateEl.value=stateEl.value;
+  bzipEl.value=zipEl.value;
 }
 
-// NAV
+// NAVIGATION
 function goToPayment(){
   if(!isValidEmail(emailEl.value)){alert("Invalid email");return;}
+
+  autoFillBilling();
+
   step1.classList.remove("active");
   step2.classList.add("active");
 }
@@ -253,15 +236,19 @@ function backToShipping(){
   step1.classList.add("active");
 }
 
-// ORDER
+// PLACE ORDER
 function placeOrder(){
   if(!luhnCheck(cardEl.value)){alert("Invalid card");return;}
-  if(!isValidExp(expEl.value)){alert("Invalid exp");return;}
+  if(!isValidExp(expEl.value)){alert("Invalid expiration");return;}
   if(!isValidCVV(cvvEl.value)){alert("Invalid CVV");return;}
 
+  // BILLING REQUIRED
   if(!bnameEl.value||!baddressEl.value||!bcityEl.value||!bstateEl.value||!bzipEl.value){
-    alert("Billing required");return;
+    alert("Billing address is required");return;
   }
+
+  if(!isValidState(bstateEl.value)){alert("State must be 2 letters");return;}
+  if(!isValidZip(bzipEl.value)){alert("Invalid ZIP");return;}
 
   const order={
     id:"PUT"+Math.floor(Math.random()*1000000),
@@ -297,8 +284,6 @@ const bzipEl=document.getElementById("bzip");
 const step1=document.getElementById("step1");
 const step2=document.getElementById("step2");
 
-const sameAsShipping=document.getElementById("sameAsShipping");
-const billingFields=document.getElementById("billingFields");
 const cardType=document.getElementById("cardType");
 </script>
 
