@@ -85,6 +85,13 @@
       margin-bottom: 10px;
       font-weight: bold;
     }
+
+    .box {
+      border: 1px solid #ddd;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
   </style>
 </head>
 
@@ -117,64 +124,63 @@
     <!-- STEP 2 -->
     <div id="step2" class="step">
 
-      <h3>Payment Details</h3>
+      <h3>Payment Method</h3>
       <div class="secure">🔒 Secure payment</div>
 
-      <input type="text" id="card" placeholder="Card Number" oninput="detectCard()">
-      <div id="cardType" style="font-size:14px; margin-bottom:10px;"></div>
+      <!-- CARD -->
+      <div class="box">
+        <h4>Card Information</h4>
 
-      <input type="text" id="exp" placeholder="MM/YY">
-      <input type="text" id="cvv" placeholder="CVV">
-      <input type="text" id="cardname" placeholder="Name on Card">
+        <input type="text" id="card" placeholder="Card Number" oninput="detectCard()">
+        <div id="cardType" style="font-size:14px;"></div>
 
-      <h3>Billing Address (for this card)</h3>
+        <div style="display:flex; gap:10px;">
+          <input type="text" id="exp" placeholder="MM/YY">
+          <input type="text" id="cvv" placeholder="CVV">
+        </div>
 
-      <label>
-        <input type="checkbox" id="sameAsShipping" checked onchange="toggleBilling()">
-        Same as shipping address
-      </label>
+        <input type="text" id="cardname" placeholder="Name on Card">
+      </div>
 
-      <div id="billingFields" style="display:none;">
-        <input type="text" id="bname" placeholder="Full Name">
-        <input type="text" id="baddress" placeholder="Address">
-        <input type="text" id="bcity" placeholder="City">
-        <input type="text" id="bstate" placeholder="State (CA)">
-        <input type="text" id="bzip" placeholder="ZIP Code">
+      <!-- BILLING -->
+      <div class="box">
+        <h4>Billing Address</h4>
+
+        <label style="display:flex; gap:8px;">
+          <input type="checkbox" id="sameAsShipping" checked onchange="toggleBilling()">
+          Same as shipping address
+        </label>
+
+        <div id="billingFields" style="display:none;">
+          <input type="text" id="bname" placeholder="Full Name">
+          <input type="text" id="baddress" placeholder="Billing Address">
+          <input type="text" id="bcity" placeholder="City">
+
+          <div style="display:flex; gap:10px;">
+            <input type="text" id="bstate" placeholder="State">
+            <input type="text" id="bzip" placeholder="ZIP">
+          </div>
+        </div>
       </div>
 
       <button onclick="placeOrder()">Place Order</button>
       <button class="secondary" onclick="backToShipping()">Back</button>
+
     </div>
 
   </div>
 
   <!-- RIGHT -->
   <div class="right">
-
     <h3>Order Summary</h3>
 
-    <div class="row">
-      <span>Items:</span>
-      <span>$3.00</span>
-    </div>
-
-    <div class="row">
-      <span>Shipping:</span>
-      <span style="color:green;">FREE</span>
-    </div>
-
-    <div class="row">
-      <span>Estimated Tax:</span>
-      <span>$1.00</span>
-    </div>
+    <div class="row"><span>Items:</span><span>$3.00</span></div>
+    <div class="row"><span>Shipping:</span><span style="color:green;">FREE</span></div>
+    <div class="row"><span>Tax:</span><span>$1.00</span></div>
 
     <hr>
 
-    <div class="row total">
-      <span>Total:</span>
-      <span>$4.00</span>
-    </div>
-
+    <div class="row total"><span>Total:</span><span>$4.00</span></div>
   </div>
 
 </div>
@@ -182,12 +188,12 @@
 <script>
 // VALIDATION
 function isValidEmail(e){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);}
-function isValidZip(z){return /^\d{5}(-\d{4})?$/.test(z);}
+function isValidZip(z){return /^\d{5}$/.test(z);}
 function isValidState(s){return /^[A-Za-z]{2}$/.test(s);}
 function isValidCVV(c){return /^\d{3,4}$/.test(c);}
 function isValidExp(e){return /^(0[1-9]|1[0-2])\/\d{2}$/.test(e);}
 
-// LUHN CHECK
+// LUHN
 function luhnCheck(card){
   let sum=0,flip=false;
   card=card.replace(/\D/g,'');
@@ -202,39 +208,42 @@ function luhnCheck(card){
 // CARD TYPE
 function getCardType(n){
   n=n.replace(/\D/g,'');
-  if(/^4/.test(n)) return "Visa (Credit/Debit)";
-  if(/^5[1-5]/.test(n)) return "Mastercard (Credit/Debit)";
-  if(/^3[47]/.test(n)) return "American Express (Credit)";
-  if(/^6/.test(n)) return "Discover (Credit)";
-  return "Unknown Card";
+  if(/^4/.test(n)) return "Visa";
+  if(/^5[1-5]/.test(n)) return "Mastercard";
+  if(/^3[47]/.test(n)) return "Amex";
+  if(/^6/.test(n)) return "Discover";
+  return "Unknown";
 }
 
 function detectCard(){
-  const val = cardEl.value;
-  cardType.innerHTML = val ? "Card Type: " + getCardType(val) : "";
+  cardType.innerHTML = cardEl.value ? "Card: "+getCardType(cardEl.value) : "";
 }
 
-// BILLING TOGGLE
+// BILLING
 function toggleBilling(){
-  billingFields.style.display = sameAsShipping.checked ? "none" : "block";
+  if(sameAsShipping.checked){
+    billingFields.style.display="none";
+
+    bnameEl.value=nameEl.value;
+    baddressEl.value=addressEl.value;
+    bcityEl.value=cityEl.value;
+    bstateEl.value=stateEl.value;
+    bzipEl.value=zipEl.value;
+
+  } else {
+    billingFields.style.display="block";
+
+    bnameEl.value="";
+    baddressEl.value="";
+    bcityEl.value="";
+    bstateEl.value="";
+    bzipEl.value="";
+  }
 }
 
-// STEP CHANGE
+// NAV
 function goToPayment(){
-  let email=emailEl.value.trim();
-  let name=nameEl.value.trim();
-  let addr=addressEl.value.trim();
-  let city=cityEl.value.trim();
-  let state=stateEl.value.trim();
-  let zip=zipEl.value.trim();
-
-  if(!email||!name||!addr||!city||!state||!zip){
-    alert("Fill all shipping fields");return;
-  }
-  if(!isValidEmail(email)){alert("Invalid email");return;}
-  if(!isValidState(state)){alert("Use 2-letter state");return;}
-  if(!isValidZip(zip)){alert("Invalid ZIP");return;}
-
+  if(!isValidEmail(emailEl.value)){alert("Invalid email");return;}
   step1.classList.remove("active");
   step2.classList.add("active");
 }
@@ -244,60 +253,53 @@ function backToShipping(){
   step1.classList.add("active");
 }
 
-// FINAL ORDER
+// ORDER
 function placeOrder(){
-  let card=cardEl.value.trim();
-  let exp=expEl.value.trim();
-  let cvv=cvvEl.value.trim();
+  if(!luhnCheck(cardEl.value)){alert("Invalid card");return;}
+  if(!isValidExp(expEl.value)){alert("Invalid exp");return;}
+  if(!isValidCVV(cvvEl.value)){alert("Invalid CVV");return;}
 
-  if(!luhnCheck(card)){alert("Invalid card");return;}
-  if(!isValidExp(exp)){alert("Invalid exp");return;}
-  if(!isValidCVV(cvv)){alert("Invalid CVV");return;}
-
-  if(!sameAsShipping.checked){
-    if(!bnameEl.value||!baddressEl.value||!bcityEl.value||!bstateEl.value||!bzipEl.value){
-      alert("Fill billing address");return;
-    }
+  if(!bnameEl.value||!baddressEl.value||!bcityEl.value||!bstateEl.value||!bzipEl.value){
+    alert("Billing required");return;
   }
 
-  const order = {
-    orderNumber: "PUT" + Math.floor(Math.random()*1000000),
-    name: nameEl.value,
-    email: emailEl.value,
-    total: "$4.00",
-    date: new Date().toLocaleDateString(),
-    time: new Date().toLocaleTimeString()
+  const order={
+    id:"PUT"+Math.floor(Math.random()*1000000),
+    name:nameEl.value,
+    email:emailEl.value,
+    total:"$4.00",
+    date:new Date().toLocaleDateString(),
+    time:new Date().toLocaleTimeString()
   };
 
-  localStorage.setItem("orderData", JSON.stringify(order));
-
-  window.location.href = "confirmation.html";
+  localStorage.setItem("orderData",JSON.stringify(order));
+  window.location.href="confirmation.html";
 }
 
-// ELEMENTS (FIXED)
-const emailEl = document.getElementById("email");
-const nameEl = document.getElementById("name");
-const addressEl = document.getElementById("address");
-const cityEl = document.getElementById("city");
-const stateEl = document.getElementById("state");
-const zipEl = document.getElementById("zip");
+// ELEMENTS
+const emailEl=document.getElementById("email");
+const nameEl=document.getElementById("name");
+const addressEl=document.getElementById("address");
+const cityEl=document.getElementById("city");
+const stateEl=document.getElementById("state");
+const zipEl=document.getElementById("zip");
 
-const cardEl = document.getElementById("card");
-const expEl = document.getElementById("exp");
-const cvvEl = document.getElementById("cvv");
+const cardEl=document.getElementById("card");
+const expEl=document.getElementById("exp");
+const cvvEl=document.getElementById("cvv");
 
-const bnameEl = document.getElementById("bname");
-const baddressEl = document.getElementById("baddress");
-const bcityEl = document.getElementById("bcity");
-const bstateEl = document.getElementById("bstate");
-const bzipEl = document.getElementById("bzip");
+const bnameEl=document.getElementById("bname");
+const baddressEl=document.getElementById("baddress");
+const bcityEl=document.getElementById("bcity");
+const bstateEl=document.getElementById("bstate");
+const bzipEl=document.getElementById("bzip");
 
-const step1 = document.getElementById("step1");
-const step2 = document.getElementById("step2");
+const step1=document.getElementById("step1");
+const step2=document.getElementById("step2");
 
-const sameAsShipping = document.getElementById("sameAsShipping");
-const billingFields = document.getElementById("billingFields");
-const cardType = document.getElementById("cardType");
+const sameAsShipping=document.getElementById("sameAsShipping");
+const billingFields=document.getElementById("billingFields");
+const cardType=document.getElementById("cardType");
 </script>
 
 </body>
