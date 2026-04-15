@@ -34,20 +34,8 @@
       border-radius: 10px;
     }
 
-    .left {
-      flex: 2;
-    }
-
-    .right {
-      flex: 1;
-      height: fit-content;
-      position: sticky;
-      top: 10px;
-    }
-
-    h3 {
-      margin-top: 0;
-    }
+    .left { flex: 2; }
+    .right { flex: 1; }
 
     input {
       width: 100%;
@@ -55,22 +43,9 @@
       margin: 8px 0;
       border-radius: 6px;
       border: 1px solid #ccc;
-      font-size: 14px;
     }
 
-    input:focus {
-      outline: none;
-      border-color: #ffa41c;
-    }
-
-    .row {
-      display: flex;
-      gap: 10px;
-    }
-
-    .row input {
-      flex: 1;
-    }
+    .row { display: flex; gap: 10px; }
 
     button {
       width: 100%;
@@ -84,28 +59,12 @@
       font-weight: bold;
     }
 
-    .secondary {
-      background: #ddd;
-    }
-
-    .box {
-      border: 1px solid #eee;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 15px;
-    }
-
-    .secure {
-      color: green;
-      font-size: 13px;
-      margin-bottom: 10px;
-    }
+    .secondary { background: #ddd; }
 
     .summary-row {
       display: flex;
       justify-content: space-between;
       margin: 8px 0;
-      font-size: 15px;
     }
 
     .total {
@@ -117,19 +76,8 @@
     .step { display: none; }
     .active { display: block; }
 
-    /* 📱 MOBILE */
     @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
-
-      .right {
-        position: static;
-      }
-
-      header {
-        font-size: 18px;
-      }
+      .container { flex-direction: column; }
     }
   </style>
 </head>
@@ -140,59 +88,50 @@
 
 <div class="container">
 
-  <!-- LEFT -->
   <div class="left">
 
     <!-- STEP 1 -->
     <div id="step1" class="step active">
 
       <h3>Contact</h3>
-      <input type="email" id="email" placeholder="Email Address">
+      <input type="email" id="email" placeholder="Email">
 
-      <h3>Shipping Address</h3>
+      <h3>Shipping</h3>
       <input type="text" id="name" placeholder="Full Name">
       <input type="text" id="address" placeholder="Address">
       <input type="text" id="city" placeholder="City">
 
       <div class="row">
         <input type="text" id="state" placeholder="State">
-        <input type="text" id="zip" placeholder="ZIP Code">
+        <input type="text" id="zip" placeholder="ZIP">
       </div>
 
-      <button onclick="goToPayment()">Continue to Payment</button>
+      <button onclick="goToPayment()">Continue</button>
     </div>
 
     <!-- STEP 2 -->
     <div id="step2" class="step">
 
       <h3>Payment</h3>
-      <div class="secure">🔒 Secure checkout</div>
 
-      <div class="box">
-        <h4>Card Info</h4>
+      <input type="text" id="card" placeholder="Card Number" oninput="detectCard()">
+      <div id="cardType"></div>
 
-        <input type="text" id="card" placeholder="Card Number" oninput="detectCard()">
-        <div id="cardType"></div>
-
-        <div class="row">
-          <input type="text" id="exp" placeholder="MM/YY">
-          <input type="text" id="cvv" placeholder="CVV">
-        </div>
-
-        <input type="text" id="cardname" placeholder="Name on Card">
+      <div class="row">
+        <input type="text" id="exp" placeholder="MM/YY">
+        <input type="text" id="cvv" placeholder="CVV">
       </div>
 
-      <div class="box">
-        <h4>Billing Address</h4>
+      <input type="text" id="cardname" placeholder="Name on Card">
 
-        <input type="text" id="bname" placeholder="Full Name">
-        <input type="text" id="baddress" placeholder="Address">
-        <input type="text" id="bcity" placeholder="City">
+      <h3>Billing Address</h3>
+      <input type="text" id="bname" placeholder="Full Name">
+      <input type="text" id="baddress" placeholder="Address">
+      <input type="text" id="bcity" placeholder="City">
 
-        <div class="row">
-          <input type="text" id="bstate" placeholder="State">
-          <input type="text" id="bzip" placeholder="ZIP Code">
-        </div>
+      <div class="row">
+        <input type="text" id="bstate" placeholder="State">
+        <input type="text" id="bzip" placeholder="ZIP">
       </div>
 
       <button onclick="placeOrder()">Place Order</button>
@@ -202,14 +141,13 @@
 
   </div>
 
-  <!-- RIGHT -->
   <div class="right">
 
-    <h3>Order Summary</h3>
+    <h3>Summary</h3>
 
     <div class="summary-row">
       <span>Items</span>
-      <span>$3.00</span>
+      <span>$3</span>
     </div>
 
     <div class="summary-row">
@@ -219,14 +157,14 @@
 
     <div class="summary-row">
       <span>Tax</span>
-      <span>$1.00</span>
+      <span>$1</span>
     </div>
 
     <hr>
 
     <div class="summary-row total">
       <span>Total</span>
-      <span>$4.00</span>
+      <span>$4</span>
     </div>
 
   </div>
@@ -241,7 +179,17 @@ function isValidState(s){return /^[A-Za-z]{2}$/.test(s);}
 function isValidCVV(c){return /^\d{3,4}$/.test(c);}
 function isValidExp(e){return /^(0[1-9]|1[0-2])\/\d{2}$/.test(e);}
 
-// CARD CHECK
+// CHECK EXPIRED
+function isExpired(exp){
+  let [m,y] = exp.split("/");
+  let now = new Date();
+  let year = 2000 + parseInt(y);
+  let month = parseInt(m);
+  return year < now.getFullYear() || 
+         (year === now.getFullYear() && month < now.getMonth()+1);
+}
+
+// LUHN
 function luhnCheck(card){
   let sum=0,flip=false;
   card=card.replace(/\D/g,'');
@@ -253,6 +201,7 @@ function luhnCheck(card){
   return sum%10===0;
 }
 
+// CARD TYPE
 function getCardType(n){
   n=n.replace(/\D/g,'');
   if(/^4/.test(n)) return "Visa";
@@ -269,19 +218,10 @@ function detectCard(){
 function goToPayment(){
   if(!isValidEmail(emailEl.value)){alert("Invalid email");return;}
 
-  autoFillBilling();
-
   step1.classList.remove("active");
   step2.classList.add("active");
-}
 
-function backToShipping(){
-  step2.classList.remove("active");
-  step1.classList.add("active");
-}
-
-// AUTO FILL
-function autoFillBilling(){
+  // auto-fill billing
   bnameEl.value=nameEl.value;
   baddressEl.value=addressEl.value;
   bcityEl.value=cityEl.value;
@@ -289,27 +229,41 @@ function autoFillBilling(){
   bzipEl.value=zipEl.value;
 }
 
-// ORDER
-function placeOrder(){
-  if(!luhnCheck(cardEl.value)){alert("Invalid card");return;}
-  if(!isValidExp(expEl.value)){alert("Invalid exp");return;}
-  if(!isValidCVV(cvvEl.value)){alert("Invalid CVV");return;}
+function backToShipping(){
+  step2.classList.remove("active");
+  step1.classList.add("active");
+}
 
-  if(!bnameEl.value||!baddressEl.value||!bcityEl.value||!bstateEl.value||!bzipEl.value){
-    alert("Billing required");return;
+// FINAL
+function placeOrder(){
+
+  let card = cardEl.value.replace(/\D/g,'');
+
+  if(card.length < 13){
+    alert("Card too short"); return;
   }
 
-  const order={
-    id:"PUT"+Math.floor(Math.random()*1000000),
-    name:nameEl.value,
-    email:emailEl.value,
-    total:"$4.00",
-    date:new Date().toLocaleDateString(),
-    time:new Date().toLocaleTimeString()
-  };
+  if(!luhnCheck(card)){
+    alert("Invalid card number"); return;
+  }
 
-  localStorage.setItem("orderData",JSON.stringify(order));
-  window.location.href="confirmation.html";
+  if(!isValidExp(expEl.value)){
+    alert("Invalid expiration"); return;
+  }
+
+  if(isExpired(expEl.value)){
+    alert("Card expired"); return;
+  }
+
+  if(!isValidCVV(cvvEl.value)){
+    alert("Invalid CVV"); return;
+  }
+
+  if(!bnameEl.value||!baddressEl.value||!bcityEl.value||!bstateEl.value||!bzipEl.value){
+    alert("Billing required"); return;
+  }
+
+  alert("Payment Approved ✅");
 }
 
 // ELEMENTS
