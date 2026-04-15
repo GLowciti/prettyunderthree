@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTY<!DOCTYPE html>
 <html>
 <head>
   <title>Secure Checkout | PrettyUnderThree</title>
@@ -38,8 +38,6 @@
     .left { flex: 2; }
     .right { flex: 1; }
 
-    h3 { margin-top: 0; }
-
     input {
       width: 100%;
       padding: 10px;
@@ -59,9 +57,7 @@
       cursor: pointer;
     }
 
-    .secondary {
-      background: #ddd;
-    }
+    .secondary { background: #ddd; }
 
     .row {
       display: flex;
@@ -75,13 +71,8 @@
       color: #b12704;
     }
 
-    .step {
-      display: none;
-    }
-
-    .active {
-      display: block;
-    }
+    .step { display: none; }
+    .active { display: block; }
 
     .secure {
       color: green;
@@ -100,7 +91,6 @@
 <body>
 
 <header>🔒 Secure Checkout</header>
-
 <div class="steps">Step 1: Shipping ➡ Step 2: Payment</div>
 
 <div class="container">
@@ -118,7 +108,7 @@
       <input type="text" id="name" placeholder="Full Name">
       <input type="text" id="address" placeholder="Address">
       <input type="text" id="city" placeholder="City">
-      <input type="text" id="state" placeholder="State (ex: CA)">
+      <input type="text" id="state" placeholder="State (CA)">
       <input type="text" id="zip" placeholder="ZIP Code">
 
       <button onclick="goToPayment()">Continue to Payment</button>
@@ -130,10 +120,27 @@
       <h3>Payment Details</h3>
       <div class="secure">🔒 Secure payment</div>
 
-      <input type="text" id="card" placeholder="Card Number">
+      <input type="text" id="card" placeholder="Card Number" oninput="detectCard()">
+      <div id="cardType" style="font-size:14px; margin-bottom:10px;"></div>
+
       <input type="text" id="exp" placeholder="MM/YY">
       <input type="text" id="cvv" placeholder="CVV">
       <input type="text" id="cardname" placeholder="Name on Card">
+
+      <h3>Billing Address (for this card)</h3>
+
+      <label>
+        <input type="checkbox" id="sameAsShipping" checked onchange="toggleBilling()">
+        Same as shipping address
+      </label>
+
+      <div id="billingFields" style="display:none;">
+        <input type="text" id="bname" placeholder="Full Name">
+        <input type="text" id="baddress" placeholder="Address">
+        <input type="text" id="bcity" placeholder="City">
+        <input type="text" id="bstate" placeholder="State (CA)">
+        <input type="text" id="bzip" placeholder="ZIP Code">
+      </div>
 
       <button onclick="placeOrder()">Place Order</button>
       <button class="secondary" onclick="backToShipping()">Back</button>
@@ -180,56 +187,39 @@ function isValidState(s){return /^[A-Za-z]{2}$/.test(s);}
 function isValidCVV(c){return /^\d{3,4}$/.test(c);}
 function isValidExp(e){return /^(0[1-9]|1[0-2])\/\d{2}$/.test(e);}
 
-// LUHN ALGORITHM (REAL CARD CHECK)
-function luhnCheck(card) {
-  let sum = 0;
-  let shouldDouble = false;
-
-  card = card.replace(/\D/g, '');
-
-  for (let i = card.length - 1; i >= 0; i--) {
-    let digit = parseInt(card.charAt(i));
-
-    if (shouldDouble) {
-      digit *= 2;
-      if (digit > 9) digit -= 9;
-    }
-
-    sum += digit;
-    shouldDouble = !shouldDouble;
+// LUHN CHECK
+function luhnCheck(card){
+  let sum=0,flip=false;
+  card=card.replace(/\D/g,'');
+  for(let i=card.length-1;i>=0;i--){
+    let n=parseInt(card[i]);
+    if(flip){n*=2;if(n>9)n-=9;}
+    sum+=n;flip=!flip;
   }
-
-  return (sum % 10) === 0;
+  return sum%10===0;
 }
 
-// CARD TYPE DETECTION
-function getCardType(number) {
-  number = number.replace(/\D/g, '');
-
-  if (/^4/.test(number)) return "Visa (Credit/Debit)";
-  if (/^5[1-5]/.test(number)) return "Mastercard (Credit/Debit)";
-  if (/^3[47]/.test(number)) return "American Express (Credit)";
-  if (/^6/.test(number)) return "Discover (Credit)";
-
+// CARD TYPE
+function getCardType(n){
+  n=n.replace(/\D/g,'');
+  if(/^4/.test(n)) return "Visa (Credit/Debit)";
+  if(/^5[1-5]/.test(n)) return "Mastercard (Credit/Debit)";
+  if(/^3[47]/.test(n)) return "American Express (Credit)";
+  if(/^6/.test(n)) return "Discover (Credit)";
   return "Unknown Card";
 }
 
-// LIVE DETECTION
-function detectCard() {
-  const cardInput = document.getElementById("card").value;
-  const typeDiv = document.getElementById("cardType");
-
-  if (!cardInput) {
-    typeDiv.innerHTML = "";
-    return;
-  }
-
-  const type = getCardType(cardInput);
-
-  typeDiv.innerHTML = "Card Type: " + type;
+function detectCard(){
+  let val=cardEl.value;
+  cardType.innerHTML=val ? "Card Type: "+getCardType(val) : "";
 }
 
-// STEP 1 → STEP 2
+// BILLING TOGGLE
+function toggleBilling(){
+  billingFields.style.display = sameAsShipping.checked ? "none":"block";
+}
+
+// STEP CHANGE
 function goToPayment(){
   let email=emailEl.value.trim();
   let name=nameEl.value.trim();
@@ -239,7 +229,7 @@ function goToPayment(){
   let zip=zipEl.value.trim();
 
   if(!email||!name||!addr||!city||!state||!zip){
-    alert("Fill all shipping fields"); return;
+    alert("Fill all shipping fields");return;
   }
   if(!isValidEmail(email)){alert("Invalid email");return;}
   if(!isValidState(state)){alert("Use 2-letter state");return;}
@@ -249,63 +239,61 @@ function goToPayment(){
   step2.classList.add("active");
 }
 
-// BACK
 function backToShipping(){
   step2.classList.remove("active");
   step1.classList.add("active");
 }
 
-// FINAL ORDER
+// FINAL ORDER + REDIRECT
 function placeOrder(){
   let card=cardEl.value.trim();
   let exp=expEl.value.trim();
   let cvv=cvvEl.value.trim();
 
-  let bname=bnameEl.value.trim();
-  let baddr=baddressEl.value.trim();
-  let bcity=bcityEl.value.trim();
-  let bstate=bstateEl.value.trim();
-  let bzip=bzipEl.value.trim();
+  if(!luhnCheck(card)){alert("Invalid card");return;}
+  if(!isValidExp(exp)){alert("Invalid exp");return;}
+  if(!isValidCVV(cvv)){alert("Invalid CVV");return;}
 
-  if(!luhnCheck(card)){
-    alert("Invalid card number"); return;
+  if(!sameAsShipping.checked){
+    if(!bnameEl.value||!baddressEl.value||!bcityEl.value||!bstateEl.value||!bzipEl.value){
+      alert("Fill billing address");return;
+    }
   }
 
-  if(!isValidExp(exp)){
-    alert("Invalid expiration (MM/YY)"); return;
-  }
+  const order = {
+    orderNumber: "PUT" + Math.floor(Math.random()*1000000),
+    name: nameEl.value,
+    email: emailEl.value,
+    total: "$4.00",
+    date: new Date().toLocaleDateString(),
+    time: new Date().toLocaleTimeString()
+  };
 
-  if(!isValidCVV(cvv)){
-    alert("Invalid CVV"); return;
-  }
+  localStorage.setItem("orderData", JSON.stringify(order));
 
-  if(!bname||!baddr||!bcity||!bstate||!bzip){
-    alert("Fill billing address"); return;
-  }
-
-  alert("Payment successful! 🎉");
+  window.location.href = "confirmation.html";
 }
 
-// ELEMENT SHORTCUTS
-const emailEl=document.getElementById("email");
-const nameEl=document.getElementById("name");
-const addressEl=document.getElementById("address");
-const cityEl=document.getElementById("city");
-const stateEl=document.getElementById("state");
-const zipEl=document.getElementById("zip");
+// ELEMENTS
+const emailEl=email;
+const nameEl=name;
+const addressEl=address;
+const cityEl=city;
+const stateEl=state;
+const zipEl=zip;
 
-const cardEl=document.getElementById("card");
-const expEl=document.getElementById("exp");
-const cvvEl=document.getElementById("cvv");
+const cardEl=card;
+const expEl=exp;
+const cvvEl=cvv;
 
-const bnameEl=document.getElementById("bname");
-const baddressEl=document.getElementById("baddress");
-const bcityEl=document.getElementById("bcity");
-const bstateEl=document.getElementById("bstate");
-const bzipEl=document.getElementById("bzip");
+const bnameEl=bname;
+const baddressEl=baddress;
+const bcityEl=bcity;
+const bstateEl=bstate;
+const bzipEl=bzip;
 
-const step1=document.getElementById("step1");
-const step2=document.getElementById("step2");
+const step1=step1;
+const step2=step2;
 </script>
 
 </body>
