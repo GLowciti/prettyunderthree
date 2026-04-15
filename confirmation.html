@@ -2,111 +2,269 @@
 <html>
 <head>
   <title>Order Confirmation | PrettyUnderThree</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
     body {
-      font-family: Arial;
-      background: #f6f6f6;
+      font-family: Arial, sans-serif;
+      background: #eaeded;
       margin: 0;
+    }
+
+    header {
+      background: #131921;
+      color: white;
+      padding: 15px;
       text-align: center;
+      font-size: 20px;
+      font-weight: bold;
     }
 
-    .box {
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
       background: white;
-      max-width: 500px;
-      margin: 50px auto;
-      padding: 30px;
-      border-radius: 10px;
+      padding: 20px;
+      border-radius: 8px;
+      animation: fadeIn 0.6s ease;
     }
 
-    h1 {
-      color: green;
+    @keyframes fadeIn {
+      from {opacity:0; transform: translateY(10px);}
+      to {opacity:1; transform: translateY(0);}
+    }
+
+    .success {
+      color: #067d62;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .section {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 15px;
+      animation: fadeIn 0.8s ease;
     }
 
     .row {
       display: flex;
       justify-content: space-between;
-      margin: 10px 0;
-      font-size: 16px;
+      margin: 6px 0;
+      flex-wrap: wrap;
     }
 
-    .total {
-      font-size: 20px;
-      font-weight: bold;
+    .product {
+      display: flex;
+      gap: 15px;
+      margin-top: 10px;
+      align-items: center;
+    }
+
+    .product img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .price {
       color: #b12704;
+      font-weight: bold;
     }
 
     button {
-      margin-top: 20px;
+      margin-top: 15px;
       padding: 12px;
       width: 100%;
-      border: none;
-      background: #ffa41c;
-      border-radius: 5px;
+      background: #ffd814;
+      border: 1px solid #fcd200;
+      border-radius: 6px;
+      font-weight: bold;
       cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #f7ca00;
+    }
+
+    /* PROGRESS BAR */
+    .progress-container {
+      margin-top: 15px;
+    }
+
+    .progress-bar {
+      height: 6px;
+      background: #ddd;
+      border-radius: 5px;
+      overflow: hidden;
+      margin: 10px 0;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 75%;
+      background: #067d62;
+      animation: loadBar 2s ease;
+    }
+
+    @keyframes loadBar {
+      from {width: 0;}
+      to {width: 75%;}
+    }
+
+    .steps {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .step.active {
+      color: #067d62;
+      font-weight: bold;
+    }
+
+    .tracking-box {
+      background: #f7fafa;
+      padding: 12px;
+      border-radius: 6px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .product {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
   </style>
 </head>
 
 <body>
 
-<div class="box">
+<header>PrettyUnderThree</header>
 
-  <h1>✅ Order Confirmed!</h1>
-  <p>Thank you for your purchase 💄</p>
+<div class="container">
 
-  <div class="row">
-    <span>Order Number:</span>
-    <span id="orderNumber"></span>
+  <div class="success">✅ Order placed successfully!</div>
+  <p>Estimated delivery: <strong id="delivery"></strong></p>
+
+  <!-- PROGRESS TRACKING -->
+  <div class="section">
+    <h3>Delivery Progress</h3>
+
+    <div class="progress-container">
+      <div class="progress-bar">
+        <div class="progress-fill"></div>
+      </div>
+
+      <div class="steps">
+        <div class="step active">Ordered</div>
+        <div class="step active">Shipped</div>
+        <div class="step active">Out for Delivery</div>
+        <div class="step">Delivered</div>
+      </div>
+    </div>
   </div>
 
-  <div class="row">
-    <span>Name:</span>
-    <span id="name"></span>
+  <!-- ORDER INFO -->
+  <div class="section">
+    <h3>Order Info</h3>
+    <div class="row"><span>Order #</span><span id="orderNumber"></span></div>
+    <div class="row"><span>Date</span><span id="date"></span></div>
+    <div class="row"><span>Time</span><span id="time"></span></div>
   </div>
 
-  <div class="row">
-    <span>Email:</span>
-    <span id="email"></span>
+  <!-- TRACKING -->
+  <div class="section">
+    <h3>Tracking</h3>
+
+    <div class="tracking-box">
+      Tracking #: <strong id="tracking"></strong>
+      <button onclick="track()">Track Package</button>
+    </div>
   </div>
 
-  <div class="row">
-    <span>Date:</span>
-    <span id="date"></span>
+  <!-- SHIPPING -->
+  <div class="section">
+    <h3>Ship To</h3>
+    <p id="name"></p>
+    <p id="email"></p>
   </div>
 
-  <div class="row">
-    <span>Time:</span>
-    <span id="time"></span>
+  <!-- ITEMS -->
+  <div class="section">
+    <h3>Items</h3>
+    <div id="items"></div>
   </div>
 
-  <hr>
-
-  <div class="row total">
-    <span>Total Paid:</span>
-    <span id="total"></span>
+  <!-- PAYMENT -->
+  <div class="section">
+    <h3>Payment</h3>
+    <p>Card ending in **** <span id="cardLast4"></span></p>
   </div>
 
-  <button onclick="goHome()">Back to Shop</button>
+  <!-- TOTAL -->
+  <div class="section">
+    <h3>Order Summary</h3>
+
+    <div class="row"><span>Items</span><span>$3.00</span></div>
+    <div class="row"><span>Shipping</span><span style="color:green;">FREE</span></div>
+    <div class="row"><span>Tax</span><span>$1.00</span></div>
+
+    <hr>
+
+    <div class="row" style="font-weight:bold;">
+      <span>Total</span>
+      <span id="total"></span>
+    </div>
+  </div>
+
+  <button onclick="home()">Continue Shopping</button>
 
 </div>
 
 <script>
-// LOAD ORDER DATA
-const order = JSON.parse(localStorage.getItem("orderData"));
+const data = JSON.parse(localStorage.getItem("orderData"));
 
-if(order){
-  document.getElementById("orderNumber").innerText = order.orderNumber;
-  document.getElementById("name").innerText = order.name;
-  document.getElementById("email").innerText = order.email;
-  document.getElementById("date").innerText = order.date;
-  document.getElementById("time").innerText = order.time;
-  document.getElementById("total").innerText = order.total;
+if(data){
+  orderNumber.innerText = data.orderNumber;
+  date.innerText = data.date;
+  time.innerText = data.time;
+  delivery.innerText = data.delivery;
+  tracking.innerText = data.tracking;
+  cardLast4.innerText = data.cardLast4;
+  name.innerText = data.name;
+  email.innerText = data.email;
+  total.innerText = data.total;
+
+  let html = "";
+
+  data.items.forEach(item => {
+    html += `
+      <div class="product">
+        <img src="${item.img}">
+        <div>
+          <div><strong>${item.name}</strong></div>
+          <div class="price">${item.price}</div>
+        </div>
+      </div>
+    `;
+  });
+
+  items.innerHTML = html;
 }
 
-// BACK BUTTON
-function goHome(){
+// BUTTONS
+function home(){
   window.location.href = "index.html";
+}
+
+function track(){
+  alert("Tracking page coming soon 📦");
 }
 </script>
 
