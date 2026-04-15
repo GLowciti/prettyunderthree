@@ -45,7 +45,10 @@
       border: 1px solid #ccc;
     }
 
-    .row { display: flex; gap: 10px; }
+    .row {
+      display: flex;
+      gap: 10px;
+    }
 
     button {
       width: 100%;
@@ -59,7 +62,9 @@
       font-weight: bold;
     }
 
-    .secondary { background: #ddd; }
+    .secondary {
+      background: #ddd;
+    }
 
     .summary-row {
       display: flex;
@@ -77,7 +82,9 @@
     .active { display: block; }
 
     @media (max-width: 768px) {
-      .container { flex-direction: column; }
+      .container {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
@@ -88,6 +95,7 @@
 
 <div class="container">
 
+  <!-- LEFT -->
   <div class="left">
 
     <!-- STEP 1 -->
@@ -115,7 +123,7 @@
       <h3>Payment</h3>
 
       <input type="text" id="card" placeholder="Card Number" oninput="detectCard()">
-      <div id="cardType"></div>
+      <div id="cardType" style="margin-bottom:10px;"></div>
 
       <div class="row">
         <input type="text" id="exp" placeholder="MM/YY">
@@ -141,6 +149,7 @@
 
   </div>
 
+  <!-- RIGHT -->
   <div class="right">
 
     <h3>Summary</h3>
@@ -189,7 +198,7 @@ function isExpired(exp){
          (year === now.getFullYear() && month < now.getMonth()+1);
 }
 
-// LUHN
+// LUHN CHECK
 function luhnCheck(card){
   let sum=0,flip=false;
   card=card.replace(/\D/g,'');
@@ -211,22 +220,25 @@ function getCardType(n){
 }
 
 function detectCard(){
-  cardType.innerHTML = cardEl.value ? "Card: "+getCardType(cardEl.value) : "";
+  cardType.innerHTML = cardEl.value ? "Card: " + getCardType(cardEl.value) : "";
 }
 
-// NAV
+// NAVIGATION
 function goToPayment(){
-  if(!isValidEmail(emailEl.value)){alert("Invalid email");return;}
+  if(!isValidEmail(emailEl.value)){
+    alert("Invalid email");
+    return;
+  }
 
   step1.classList.remove("active");
   step2.classList.add("active");
 
-  // auto-fill billing
-  bnameEl.value=nameEl.value;
-  baddressEl.value=addressEl.value;
-  bcityEl.value=cityEl.value;
-  bstateEl.value=stateEl.value;
-  bzipEl.value=zipEl.value;
+  // CLEAR billing fields (IMPORTANT FIX)
+  bnameEl.value="";
+  baddressEl.value="";
+  bcityEl.value="";
+  bstateEl.value="";
+  bzipEl.value="";
 }
 
 function backToShipping(){
@@ -234,7 +246,7 @@ function backToShipping(){
   step1.classList.add("active");
 }
 
-// FINAL
+// FINAL CHECK
 function placeOrder(){
 
   let card = cardEl.value.replace(/\D/g,'');
@@ -260,7 +272,7 @@ function placeOrder(){
   }
 
   if(!bnameEl.value||!baddressEl.value||!bcityEl.value||!bstateEl.value||!bzipEl.value){
-    alert("Billing required"); return;
+    alert("Billing address required"); return;
   }
 
   alert("Payment Approved ✅");
