@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Checkout | PrettyUnderThree</title>
+  <title>Secure Checkout | PrettyUnderThree</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
@@ -19,73 +19,141 @@
       font-size: 22px;
     }
 
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 30px;
+    }
+
     .box {
       background: white;
-      max-width: 500px;
-      margin: 40px auto;
       padding: 20px;
       border-radius: 10px;
+      width: 320px;
+    }
+
+    h3 {
+      margin-top: 0;
     }
 
     .row {
       display: flex;
       justify-content: space-between;
-      margin: 10px 0;
-      font-size: 18px;
+      margin: 8px 0;
     }
 
     .total {
-      font-size: 22px;
       font-weight: bold;
+      font-size: 20px;
       color: #b12704;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 6px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
     }
 
     button {
       width: 100%;
-      padding: 15px;
-      margin-top: 20px;
+      padding: 14px;
       background: #ffa41c;
       border: none;
       border-radius: 5px;
-      font-size: 18px;
+      font-size: 16px;
       cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .secure {
+      color: green;
+      font-size: 14px;
+      margin-bottom: 10px;
     }
   </style>
 </head>
 
 <body>
 
-<header>Checkout 🛒</header>
+<header>🔒 Secure Checkout</header>
 
-<div class="box">
+<div class="container">
 
-  <h2>Your Order</h2>
+  <!-- ORDER SUMMARY -->
+  <div class="box">
+    <h3>Order Summary</h3>
 
-  <div class="row">
-    <span>Items:</span>
-    <span>$3.00</span>
+    <div class="row">
+      <span>Items:</span>
+      <span>$3.00</span>
+    </div>
+
+    <div class="row">
+      <span>Shipping:</span>
+      <span style="color:green;">FREE</span>
+    </div>
+
+    <div class="row">
+      <span>Estimated Tax:</span>
+      <span>$1.00</span>
+    </div>
+
+    <hr>
+
+    <div class="row total">
+      <span>Total:</span>
+      <span>$4.00</span>
+    </div>
   </div>
 
-  <div class="row">
-    <span>Shipping:</span>
-    <span style="color:green;">FREE</span>
+  <!-- PAYMENT + BILLING -->
+  <div class="box">
+    <h3>Payment Details</h3>
+    <div class="secure">🔒 Your payment is secure</div>
+
+    <label>Card Number</label>
+    <input type="text" placeholder="1234 5678 9012 3456">
+
+    <label>Expiration Date</label>
+    <input type="text" placeholder="MM/YY">
+
+    <label>CVV</label>
+    <input type="text" placeholder="123">
+
+    <label>Name on Card</label>
+    <input type="text" placeholder="Full Name">
+
+    <h3>Billing Address</h3>
+
+    <label>Full Name</label>
+    <input type="text">
+
+    <label>Address</label>
+    <input type="text">
+
+    <label>City</label>
+    <input type="text">
+
+    <label>State</label>
+    <input type="text">
+
+    <label>ZIP Code</label>
+    <input type="text">
+
+    <button onclick="placeOrder()">Place Order</button>
   </div>
-
-  <div class="row">
-    <span>Estimated Tax:</span>
-    <span>$1.00</span>
-  </div>
-
-  <hr>
-
-  <div class="row total">
-    <span>Total:</span>
-    <span>$4.00</span>
-  </div>
-
-  <button onclick="alert('Order Placed! 🎉')">Place Order</button>
 
 </div>
+
+<script>
+function placeOrder() {
+  alert("Order placed successfully! 🎉");
+}
+</script>
 
 </body>
 </html>
