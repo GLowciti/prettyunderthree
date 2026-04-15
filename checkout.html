@@ -173,79 +173,139 @@
 </div>
 
 <script>
-// VALIDATION FUNCTIONS
-function isValidZip(zip) {
-  return /^\d{5}(-\d{4})?$/.test(zip);
+// VALIDATION
+function isValidEmail(e){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);}
+function isValidZip(z){return /^\d{5}(-\d{4})?$/.test(z);}
+function isValidState(s){return /^[A-Za-z]{2}$/.test(s);}
+function isValidCVV(c){return /^\d{3,4}$/.test(c);}
+function isValidExp(e){return /^(0[1-9]|1[0-2])\/\d{2}$/.test(e);}
+
+// LUHN ALGORITHM (REAL CARD CHECK)
+function luhnCheck(card) {
+  let sum = 0;
+  let shouldDouble = false;
+
+  card = card.replace(/\D/g, '');
+
+  for (let i = card.length - 1; i >= 0; i--) {
+    let digit = parseInt(card.charAt(i));
+
+    if (shouldDouble) {
+      digit *= 2;
+      if (digit > 9) digit -= 9;
+    }
+
+    sum += digit;
+    shouldDouble = !shouldDouble;
+  }
+
+  return (sum % 10) === 0;
 }
 
-function isValidState(state) {
-  return /^[A-Za-z]{2}$/.test(state);
+// CARD TYPE DETECTION
+function getCardType(number) {
+  number = number.replace(/\D/g, '');
+
+  if (/^4/.test(number)) return "Visa (Credit/Debit)";
+  if (/^5[1-5]/.test(number)) return "Mastercard (Credit/Debit)";
+  if (/^3[47]/.test(number)) return "American Express (Credit)";
+  if (/^6/.test(number)) return "Discover (Credit)";
+
+  return "Unknown Card";
 }
 
-function isValidAddress(address) {
-  return address.length > 5;
-}
+// LIVE DETECTION
+function detectCard() {
+  const cardInput = document.getElementById("card").value;
+  const typeDiv = document.getElementById("cardType");
 
-function isValidEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
-// STEP CHANGE
-function goToPayment() {
-  const email = document.getElementById("email").value.trim();
-  const name = document.getElementById("name").value.trim();
-  const address = document.getElementById("address").value.trim();
-  const city = document.getElementById("city").value.trim();
-  const state = document.getElementById("state").value.trim();
-  const zip = document.getElementById("zip").value.trim();
-
-  if (!email || !name || !address || !city || !state || !zip) {
-    alert("Please fill in all shipping fields.");
+  if (!cardInput) {
+    typeDiv.innerHTML = "";
     return;
   }
 
-  if (!isValidEmail(email)) {
-    alert("Please enter a valid email address (example: name@email.com).");
-    return;
-  }
+  const type = getCardType(cardInput);
 
-  if (!isValidAddress(address)) {
-    alert("Please enter a valid street address.");
-    return;
-  }
-
-  if (!isValidState(state)) {
-    alert("Use 2-letter state code (example: CA).");
-    return;
-  }
-
-  if (!isValidZip(zip)) {
-    alert("Enter a valid ZIP code (example: 90001).");
-    return;
-  }
-
-  document.getElementById("step1").classList.remove("active");
-  document.getElementById("step2").classList.add("active");
+  typeDiv.innerHTML = "Card Type: " + type;
 }
 
-function backToShipping() {
-  document.getElementById("step2").classList.remove("active");
-  document.getElementById("step1").classList.add("active");
+// STEP 1 → STEP 2
+function goToPayment(){
+  let email=emailEl.value.trim();
+  let name=nameEl.value.trim();
+  let addr=addressEl.value.trim();
+  let city=cityEl.value.trim();
+  let state=stateEl.value.trim();
+  let zip=zipEl.value.trim();
+
+  if(!email||!name||!addr||!city||!state||!zip){
+    alert("Fill all shipping fields"); return;
+  }
+  if(!isValidEmail(email)){alert("Invalid email");return;}
+  if(!isValidState(state)){alert("Use 2-letter state");return;}
+  if(!isValidZip(zip)){alert("Invalid ZIP");return;}
+
+  step1.classList.remove("active");
+  step2.classList.add("active");
+}
+
+// BACK
+function backToShipping(){
+  step2.classList.remove("active");
+  step1.classList.add("active");
 }
 
 // FINAL ORDER
-function placeOrder() {
-  const card = document.getElementById("card").value.trim();
-  const exp = document.getElementById("exp").value.trim();
-  const cvv = document.getElementById("cvv").value.trim();
+function placeOrder(){
+  let card=cardEl.value.trim();
+  let exp=expEl.value.trim();
+  let cvv=cvvEl.value.trim();
 
-  if (!card || !exp || !cvv) {
-    alert("Please enter payment info.");
-    return;
+  let bname=bnameEl.value.trim();
+  let baddr=baddressEl.value.trim();
+  let bcity=bcityEl.value.trim();
+  let bstate=bstateEl.value.trim();
+  let bzip=bzipEl.value.trim();
+
+  if(!luhnCheck(card)){
+    alert("Invalid card number"); return;
   }
 
-  alert("Order placed successfully! 🎉 Confirmation sent to your email.");
+  if(!isValidExp(exp)){
+    alert("Invalid expiration (MM/YY)"); return;
+  }
+
+  if(!isValidCVV(cvv)){
+    alert("Invalid CVV"); return;
+  }
+
+  if(!bname||!baddr||!bcity||!bstate||!bzip){
+    alert("Fill billing address"); return;
+  }
+
+  alert("Payment successful! 🎉");
 }
+
+// ELEMENT SHORTCUTS
+const emailEl=document.getElementById("email");
+const nameEl=document.getElementById("name");
+const addressEl=document.getElementById("address");
+const cityEl=document.getElementById("city");
+const stateEl=document.getElementById("state");
+const zipEl=document.getElementById("zip");
+
+const cardEl=document.getElementById("card");
+const expEl=document.getElementById("exp");
+const cvvEl=document.getElementById("cvv");
+
+const bnameEl=document.getElementById("bname");
+const baddressEl=document.getElementById("baddress");
+const bcityEl=document.getElementById("bcity");
+const bstateEl=document.getElementById("bstate");
+const bzipEl=document.getElementById("bzip");
+
+const step1=document.getElementById("step1");
+const step2=document.getElementById("step2");
 </script>
 
 </body>
