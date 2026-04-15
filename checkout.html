@@ -105,7 +105,7 @@
 
 <div class="container">
 
-  <!-- LEFT SIDE -->
+  <!-- LEFT -->
   <div class="left">
 
     <!-- STEP 1 -->
@@ -118,7 +118,7 @@
       <input type="text" id="name" placeholder="Full Name">
       <input type="text" id="address" placeholder="Address">
       <input type="text" id="city" placeholder="City">
-      <input type="text" id="state" placeholder="State">
+      <input type="text" id="state" placeholder="State (ex: CA)">
       <input type="text" id="zip" placeholder="ZIP Code">
 
       <button onclick="goToPayment()">Continue to Payment</button>
@@ -141,7 +141,7 @@
 
   </div>
 
-  <!-- RIGHT SIDE (SUMMARY) -->
+  <!-- RIGHT -->
   <div class="right">
 
     <h3>Order Summary</h3>
@@ -173,12 +173,45 @@
 </div>
 
 <script>
+// VALIDATION FUNCTIONS
+function isValidZip(zip) {
+  return /^\d{5}(-\d{4})?$/.test(zip);
+}
+
+function isValidState(state) {
+  return /^[A-Za-z]{2}$/.test(state);
+}
+
+function isValidAddress(address) {
+  return address.length > 5;
+}
+
+// STEP CHANGE
 function goToPayment() {
   const email = document.getElementById("email").value;
   const name = document.getElementById("name").value;
+  const address = document.getElementById("address").value;
+  const city = document.getElementById("city").value;
+  const state = document.getElementById("state").value;
+  const zip = document.getElementById("zip").value;
 
-  if (!email || !name) {
-    alert("Please fill in your contact and shipping info.");
+  if (!email || !name || !address || !city || !state || !zip) {
+    alert("Please fill in all shipping fields.");
+    return;
+  }
+
+  if (!isValidAddress(address)) {
+    alert("Please enter a valid street address.");
+    return;
+  }
+
+  if (!isValidState(state)) {
+    alert("Use 2-letter state code (example: CA).");
+    return;
+  }
+
+  if (!isValidZip(zip)) {
+    alert("Enter a valid ZIP code (example: 90001).");
     return;
   }
 
@@ -191,10 +224,13 @@ function backToShipping() {
   document.getElementById("step1").classList.add("active");
 }
 
+// FINAL ORDER
 function placeOrder() {
   const card = document.getElementById("card").value;
+  const exp = document.getElementById("exp").value;
+  const cvv = document.getElementById("cvv").value;
 
-  if (!card) {
+  if (!card || !exp || !cvv) {
     alert("Please enter payment info.");
     return;
   }
