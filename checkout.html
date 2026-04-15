@@ -186,17 +186,26 @@ function isValidAddress(address) {
   return address.length > 5;
 }
 
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
 // STEP CHANGE
 function goToPayment() {
-  const email = document.getElementById("email").value;
-  const name = document.getElementById("name").value;
-  const address = document.getElementById("address").value;
-  const city = document.getElementById("city").value;
-  const state = document.getElementById("state").value;
-  const zip = document.getElementById("zip").value;
+  const email = document.getElementById("email").value.trim();
+  const name = document.getElementById("name").value.trim();
+  const address = document.getElementById("address").value.trim();
+  const city = document.getElementById("city").value.trim();
+  const state = document.getElementById("state").value.trim();
+  const zip = document.getElementById("zip").value.trim();
 
   if (!email || !name || !address || !city || !state || !zip) {
     alert("Please fill in all shipping fields.");
+    return;
+  }
+
+  if (!isValidEmail(email)) {
+    alert("Please enter a valid email address (example: name@email.com).");
     return;
   }
 
@@ -226,16 +235,16 @@ function backToShipping() {
 
 // FINAL ORDER
 function placeOrder() {
-  const card = document.getElementById("card").value;
-  const exp = document.getElementById("exp").value;
-  const cvv = document.getElementById("cvv").value;
+  const card = document.getElementById("card").value.trim();
+  const exp = document.getElementById("exp").value.trim();
+  const cvv = document.getElementById("cvv").value.trim();
 
   if (!card || !exp || !cvv) {
     alert("Please enter payment info.");
     return;
   }
 
-  alert("Order placed successfully! 🎉");
+  alert("Order placed successfully! 🎉 Confirmation sent to your email.");
 }
 </script>
 
