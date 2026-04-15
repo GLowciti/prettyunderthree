@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Order Confirmation | PrettyUnderThree</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: #f6f6f6;
+      margin: 0;
+      text-align: center;
+    }
+
+    .box {
+      background: white;
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 30px;
+      border-radius: 10px;
+    }
+
+    h1 {
+      color: green;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+
+    .total {
+      font-size: 20px;
+      font-weight: bold;
+      color: #b12704;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px;
+      width: 100%;
+      border: none;
+      background: #ffa41c;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="box">
+
+  <h1>✅ Order Confirmed!</h1>
+  <p>Thank you for your purchase 💄</p>
+
+  <div class="row">
+    <span>Order Number:</span>
+    <span id="orderNumber"></span>
+  </div>
+
+  <div class="row">
+    <span>Name:</span>
+    <span id="name"></span>
+  </div>
+
+  <div class="row">
+    <span>Email:</span>
+    <span id="email"></span>
+  </div>
+
+  <div class="row">
+    <span>Date:</span>
+    <span id="date"></span>
+  </div>
+
+  <div class="row">
+    <span>Time:</span>
+    <span id="time"></span>
+  </div>
+
+  <hr>
+
+  <div class="row total">
+    <span>Total Paid:</span>
+    <span id="total"></span>
+  </div>
+
+  <button onclick="goHome()">Back to Shop</button>
+
+</div>
+
+<script>
+// LOAD ORDER DATA
+const order = JSON.parse(localStorage.getItem("orderData"));
+
+if(order){
+  document.getElementById("orderNumber").innerText = order.orderNumber;
+  document.getElementById("name").innerText = order.name;
+  document.getElementById("email").innerText = order.email;
+  document.getElementById("date").innerText = order.date;
+  document.getElementById("time").innerText = order.time;
+  document.getElementById("total").innerText = order.total;
+}
+
+// BACK BUTTON
+function goHome(){
+  window.location.href = "index.html";
+}
+</script>
+
+</body>
+</html>
