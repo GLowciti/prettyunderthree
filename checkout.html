@@ -225,11 +225,10 @@ function detectCard(){
 
 // NAVIGATION
 function goToPayment(){
-  if(!isValidEmail(emailEl.value)){
-    alert("Invalid email");
-    return;
-  }
-
+  if(!nameEl.value || !addressEl.value || !cityEl.value){
+  alert("Shipping info required");
+  return;
+}
   step1.classList.remove("active");
   step2.classList.add("active");
 
