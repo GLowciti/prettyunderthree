@@ -284,32 +284,35 @@ function placeOrder(event){
     bzip: bzipEl.value
   };
 
-  fetch("https://script.google.com/macros/s/AKfycbxgqumKEhFDaNHqn9AKxp8cFFs2Is5yh4FCCbrMfYCLuRq3QZ2yzPArCVK3zEL5kt0eLA/exec", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify(data)
-  })
-  .then(res => {
-    if(!res.ok) throw new Error();
-    
-    const orderNumber = "PU3-" + Math.floor(100000 + Math.random() * 900000);
-    const now = new Date();
+  fetch("https://script.google.com/macros/s/AKfycbxBE19E7El4tQUb9UUHFxkmyXc0Ew8bHyLEVKLAImKh-oPztyv6S3wD6wl71KHe6mhzWw/exec", {
+  method: "POST",
+  mode: "no-cors", // IMPORTANT
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(data)
+})
+.then(() => {
 
-    localStorage.setItem("orderData", JSON.stringify({
-      orderNumber,
-      name: nameEl.value,
-      email: emailEl.value,
-      total: "$4.00",
-      date: now.toLocaleDateString(),
-      time: now.toLocaleTimeString()
-    }));
+  const orderNumber = "PU3-" + Math.floor(100000 + Math.random() * 900000);
+  const now = new Date();
 
-    window.location.href = "confirmation.html";
-  })
-  .catch(() => {
-    alert("Error submitting");
-    resetBtn();
-  });
+  localStorage.setItem("orderData", JSON.stringify({
+    orderNumber,
+    name: nameEl.value,
+    email: emailEl.value,
+    total: "$4.00",
+    date: now.toLocaleDateString(),
+    time: now.toLocaleTimeString()
+  }));
+
+  window.location.href = "confirmation.html";
+
+})
+.catch(() => {
+  alert("Error submitting");
+  resetBtn();
+});
 }
 
 function resetBtn(){
