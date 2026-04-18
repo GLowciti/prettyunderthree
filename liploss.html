@@ -90,12 +90,12 @@ button:hover {
 }
 
 /* BUY BOX */
-.right {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 250px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+<div class="stock-warning">⚠ Only 7 left in stock - order soon</div>
+
+<div class="shipping-info">
+  FREE delivery <b id="deliveryDate"></b><br>
+  <span class="fast">Or fastest delivery Tomorrow</span>
+</div>
 }
 
 .right select,
@@ -474,6 +474,25 @@ function loadMoreReviews() {
 
 // load first batch
 loadMoreReviews();
+
+
+  // DELIVERY DATE GENERATOR (3–5 days random like real stores)
+function getDeliveryDate() {
+  const today = new Date();
+
+  // random between 3–5 days
+  const daysToAdd = Math.floor(Math.random() * 3) + 3;
+
+  today.setDate(today.getDate() + daysToAdd);
+
+  return today.toLocaleDateString(undefined, {
+    weekday: "long",
+    month: "long",
+    day: "numeric"
+  });
+}
+
+document.getElementById("deliveryDate").innerText = getDeliveryDate();
   
 </script>
 
