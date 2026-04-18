@@ -41,7 +41,6 @@
 
     .hero h2 {
       font-size: 40px;
-      margin-bottom: 10px;
     }
 
     .products {
@@ -54,16 +53,11 @@
 
     .card {
       background: white;
-      width: 200px;
+      width: 220px;
       padding: 15px;
       border-radius: 15px;
       text-align: center;
       box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      transition: 0.2s;
-    }
-
-    .card:hover {
-      transform: scale(1.05);
     }
 
     .card img {
@@ -71,9 +65,38 @@
       border-radius: 10px;
     }
 
-    .price {
-      color: #ff4da6;
+    .old-price {
+      text-decoration: line-through;
+      color: #999;
+      font-size: 14px;
+    }
+
+    .sale {
+      color: #ff1a8c;
       font-weight: bold;
+      font-size: 18px;
+    }
+
+    .timer {
+      color: red;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    .stock {
+      color: #e6005c;
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
+    .stars {
+      color: gold;
+      margin: 5px 0;
+    }
+
+    .review {
+      font-size: 12px;
+      color: #555;
     }
 
     button {
@@ -86,16 +109,11 @@
       margin-top: 10px;
     }
 
-    button:hover {
-      background: #ff1a8c;
-    }
-
     footer {
       text-align: center;
       padding: 20px;
       background: white;
       margin-top: 30px;
-      font-size: 14px;
     }
   </style>
 </head>
@@ -118,39 +136,59 @@
 
 <div class="products">
 
+  <!-- LIP GLOSS -->
   <div class="card">
-  <a href="liploss.html">
-    <img src="https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400">
-  </a>
-  <h3>Lip Gloss Set</h3>
-  <p class="price">$3.00</p>
-  <button onclick="window.location.href='liploss.html'">View</button>
-</div>
+    <a href="liploss.html">
+      <img src="https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400">
+    </a>
 
-  <div class="card">
-    <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400">
-    <h3>Makeup Brush</h3>
-    <p class="price">$3.00</p>
-    <button onclick="buy()">Buy Now</button>
-  </div>
+    <h3>Lip Gloss Set</h3>
 
-  <div class="card">
-    <img src="https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?w=400">
-    <h3>Face Mask</h3>
-    <p class="price">$3.00</p>
-    <button onclick="buy()">Buy Now</button>
+    <div class="stars">★★★★★</div>
+    <div class="review">4.9 (2,184 reviews)</div>
+
+    <p>
+      <span class="old-price">$53.99</span><br>
+      <span class="sale">$3.00</span>
+    </p>
+
+    <div class="timer">Sale ends in: <span id="countdown"></span></div>
+    <div class="stock" id="stock">Only 12 left in stock</div>
+
+    <button onclick="window.location.href='liploss.html'">View</button>
   </div>
 
 </div>
 
 <footer>
-  © 2026 PrettyUnderThree | Beauty for $3 & under 💖
+  © 2026 PrettyUnderThree 💖
 </footer>
 
 <script>
-  function buy() {
-    alert("Checkout coming soon 💖");
+// COUNTDOWN TIMER (15 minutes reset)
+let time = 900;
+
+function updateTimer() {
+  let minutes = Math.floor(time / 60);
+  let seconds = time % 60;
+  document.getElementById("countdown").innerText =
+    minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+
+  if (time > 0) time--;
+}
+
+setInterval(updateTimer, 1000);
+
+// FAKE STOCK DROPPER (looks dynamic)
+let stock = 12;
+
+setInterval(() => {
+  if (stock > 3) {
+    stock--;
+    document.getElementById("stock").innerText =
+      "Only " + stock + " left in stock";
   }
+}, 7000);
 </script>
 
 </body>
