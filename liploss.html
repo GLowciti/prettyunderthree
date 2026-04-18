@@ -5,53 +5,202 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
-    body{font-family:Arial,sans-serif;margin:0;background:#f3f3f3}
-header{background:#000;color:gold;padding:15px;text-align:center;font-size:22px}
+    body{
+  font-family:Arial,sans-serif;
+  margin:0;
+  background:#f3f3f3;
+}
 
+/* ========================= */
+/* HEADER (UPGRADED) */
+/* ========================= */
+.topbar{
+  background:linear-gradient(90deg,#ff4da6,#cc0066);
+  color:#fff;
+  padding:14px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  font-size:20px;
+  font-weight:bold;
+  box-shadow:0 4px 12px rgba(0,0,0,.2);
+}
+
+.logo{
+  text-align:center;
+}
+
+.home-btn{
+  position:absolute;
+  left:15px;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(255,255,255,0.15);
+  border:none;
+  color:#fff;
+  font-size:18px;
+  padding:8px 12px;
+  border-radius:8px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.home-btn:hover{
+  background:rgba(255,255,255,0.3);
+  transform:translateY(-50%) scale(1.05);
+}
+
+/* ========================= */
 /* LAYOUT */
-.container{display:flex;flex-wrap:wrap;gap:40px;justify-content:center;padding:30px}
+/* ========================= */
+.container{
+  display:flex;
+  flex-wrap:wrap;
+  gap:40px;
+  justify-content:center;
+  padding:30px;
+}
 
+/* ========================= */
 /* IMAGE */
+/* ========================= */
 .gallery{text-align:center}
-.main-img{width:320px;height:320px;object-fit:cover;border-radius:12px;background:#fff;padding:10px;box-shadow:0 6px 18px rgba(0,0,0,.12)}
+
+.main-img{
+  width:320px;
+  height:320px;
+  object-fit:cover;
+  border-radius:12px;
+  background:#fff;
+  padding:10px;
+  box-shadow:0 6px 18px rgba(0,0,0,.12);
+}
 
 /* DOTS */
 #dots{margin-top:10px}
-.dot{height:10px;width:10px;margin:5px;background:#bbb;border-radius:50%;display:inline-block;cursor:pointer}
+
+.dot{
+  height:10px;
+  width:10px;
+  margin:5px;
+  background:#bbb;
+  border-radius:50%;
+  display:inline-block;
+  cursor:pointer;
+}
+
 .active-dot{background:#ff4da6}
 
+/* ========================= */
 /* PRODUCT INFO */
+/* ========================= */
 .middle{max-width:420px}
-.product-title{font-size:28px;font-weight:800;margin-bottom:10px;color:#111}
-.rating-row{display:flex;gap:10px;align-items:center;font-size:14px;margin-bottom:10px}
+
+.product-title{
+  font-size:28px;
+  font-weight:800;
+  margin-bottom:10px;
+  color:#111;
+}
+
+.rating-row{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  font-size:14px;
+  margin-bottom:10px;
+}
+
 .stars{color:#ffa41c;font-size:18px}
 .rating-count{color:#555}
 .bought{color:#067d62;font-weight:bold}
 
+/* ========================= */
 /* PRICE */
-.price-section{display:flex;align-items:center;gap:12px;margin:15px 0}
-.sale{font-size:34px;font-weight:800;color:#b12704}
-.was{text-decoration:line-through;color:#777;font-size:18px}
-.save{background:#cc0c39;color:#fff;padding:4px 8px;border-radius:6px;font-size:13px;font-weight:bold}
+/* ========================= */
+.price-section{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin:15px 0;
+}
 
-/* URGENCY */
-.urgency{background:#fff3cd;color:#856404;padding:10px;border-radius:6px;font-weight:bold;margin-bottom:15px}
+.sale{
+  font-size:34px;
+  font-weight:800;
+  color:#b12704;
+}
 
-/* DESCRIPTION */
-.desc{font-size:15px;line-height:1.6;color:#333}
+.was{
+  text-decoration:line-through;
+  color:#777;
+  font-size:18px;
+}
 
-/* BENEFITS */
-.benefits{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0}
-.benefit{background:#f7f7f7;padding:10px;border-radius:8px;text-align:center;font-size:14px}
-
-/* FEATURES */
-.features-box{border:1px solid #eee;padding:15px;border-radius:10px;background:#fafafa}
-
-/* TRUST */
-.trust{display:flex;justify-content:space-between;margin-top:15px;font-size:13px;color:#444}
+.save{
+  background:#cc0c39;
+  color:#fff;
+  padding:4px 8px;
+  border-radius:6px;
+  font-size:13px;
+  font-weight:bold;
+}
 
 /* ========================= */
-/* BUY BOX (FIXED RIGHT - NO MOVE) */
+/* URGENCY */
+/* ========================= */
+.urgency{
+  background:#fff3cd;
+  color:#856404;
+  padding:10px;
+  border-radius:6px;
+  font-weight:bold;
+  margin-bottom:15px;
+}
+
+/* DESCRIPTION */
+.desc{
+  font-size:15px;
+  line-height:1.6;
+  color:#333;
+}
+
+/* BENEFITS */
+.benefits{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin:15px 0;
+}
+
+.benefit{
+  background:#f7f7f7;
+  padding:10px;
+  border-radius:8px;
+  text-align:center;
+  font-size:14px;
+}
+
+/* FEATURES */
+.features-box{
+  border:1px solid #eee;
+  padding:15px;
+  border-radius:10px;
+  background:#fafafa;
+}
+
+/* TRUST */
+.trust{
+  display:flex;
+  justify-content:space-between;
+  margin-top:15px;
+  font-size:13px;
+  color:#444;
+}
+
+/* ========================= */
+/* BUY BOX */
 /* ========================= */
 .buy-box{
   background:#fff;
@@ -60,7 +209,7 @@ header{background:#000;color:gold;padding:15px;text-align:center;font-size:22px}
   width:260px;
   border:1px solid #ddd;
   box-shadow:0 6px 18px rgba(0,0,0,.12);
-  position:static; /* KEY FIX */
+  position:static;
   transition:.2s;
 }
 
@@ -69,7 +218,13 @@ header{background:#000;color:gold;padding:15px;text-align:center;font-size:22px}
   transform:translateY(-2px);
 }
 
-.price-main{font-size:28px;font-weight:bold;color:#b12704;margin-bottom:10px}
+.price-main{
+  font-size:28px;
+  font-weight:bold;
+  color:#b12704;
+  margin-bottom:10px;
+}
+
 .delivery{font-size:14px;margin-bottom:8px}
 .fast{color:#067d62}
 .stock{color:#067d62;font-weight:bold;margin:10px 0}
@@ -83,7 +238,7 @@ header{background:#000;color:gold;padding:15px;text-align:center;font-size:22px}
   border:1px solid #ccc;
 }
 
-/* BUTTONS (POP OUT) */
+/* BUTTONS */
 .cart-btn,.buy-btn{
   width:100%;
   padding:16px;
@@ -95,43 +250,70 @@ header{background:#000;color:gold;padding:15px;text-align:center;font-size:22px}
   transition:.15s;
 }
 
-/* ADD TO CART */
 .cart-btn{
   background:linear-gradient(#ffe066,#ffd814);
   border:1px solid #f0c14b;
   box-shadow:0 4px 0 #caa000,0 6px 14px rgba(0,0,0,.15);
 }
-.cart-btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 #caa000,0 10px 18px rgba(0,0,0,.2)}
 
-/* BUY NOW */
+.cart-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 0 #caa000,0 10px 18px rgba(0,0,0,.2);
+}
+
 .buy-btn{
   background:linear-gradient(#2a8cff,#0071e3);
   color:#fff;
   border:none;
   box-shadow:0 4px 0 #004a99,0 6px 14px rgba(0,0,0,.2);
 }
-.buy-btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 #004a99,0 10px 18px rgba(0,0,0,.25)}
 
-/* CLICK EFFECT */
-.cart-btn:active,.buy-btn:active{transform:translateY(2px);box-shadow:0 2px 0 rgba(0,0,0,.2)}
+.buy-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 0 #004a99,0 10px 18px rgba(0,0,0,.25);
+}
 
-/* EXTRA TEXT */
-.secure,.sold-by,.returns{font-size:13px;margin-top:10px}
+.cart-btn:active,.buy-btn:active{
+  transform:translateY(2px);
+  box-shadow:0 2px 0 rgba(0,0,0,.2);
+}
+
+.secure,.sold-by,.returns{
+  font-size:13px;
+  margin-top:10px;
+}
 
 /* ========================= */
 /* REVIEWS */
 /* ========================= */
-.section{background:#fff;margin:20px;padding:20px;border-radius:10px}
-.review-card{border-bottom:1px solid #eee;padding:15px 0}
-.review-header{display:flex;gap:10px;align-items:center}
+.section{
+  background:#fff;
+  margin:20px;
+  padding:20px;
+  border-radius:10px;
+}
+
+.review-card{
+  border-bottom:1px solid #eee;
+  padding:15px 0;
+}
+
+.review-header{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
 .review-name{font-weight:bold}
 .verified{color:#c45500;font-size:12px}
 .review-stars{color:#ffa41c;margin:5px 0}
 .review-title{font-weight:bold}
 .review-text{font-size:14px}
 .review-actions{font-size:12px;color:#555;margin-top:5px}
-    
-    /* SCROLL TO TOP BUTTON */
+
+/* ========================= */
+/* SCROLL TO TOP BUTTON */
+/* ========================= */
 #scrollTopBtn{
   position:fixed;
   bottom:20px;
@@ -153,13 +335,11 @@ header{background:#000;color:gold;padding:15px;text-align:center;font-size:22px}
   z-index:999;
 }
 
-/* SHOW BUTTON */
 #scrollTopBtn.show{
   opacity:1;
   pointer-events:auto;
 }
 
-/* HOVER EFFECT */
 #scrollTopBtn:hover{
   transform:translateY(-3px);
   background:#005bb5;
@@ -169,13 +349,16 @@ header{background:#000;color:gold;padding:15px;text-align:center;font-size:22px}
 /* MOBILE */
 /* ========================= */
 @media (max-width:768px){
-  .container{flex-direction:column;align-items:center}
+  .container{
+    flex-direction:column;
+    align-items:center;
+  }
+
   .middle{max-width:100%}
 
   .buy-box{
     width:100%;
     max-width:400px;
-    position:static; /* ensure no movement */
     margin-top:20px;
   }
 
@@ -184,7 +367,11 @@ header{background:#000;color:gold;padding:15px;text-align:center;font-size:22px}
     font-size:15px;
   }
 
-  .section{margin:10px;padding:15px}
+  .section{
+    margin:10px;
+    padding:15px;
+  }
+
   .review-text{font-size:13px}
 }
   </style>
@@ -193,7 +380,12 @@ header{background:#000;color:gold;padding:15px;text-align:center;font-size:22px}
 
 <body>
 
-<header>PrettyUnderThree ✨</header>
+
+ <!-- HEADER -->
+<header class="topbar">
+  <button class="home-btn" onclick="window.location.href='index.html'">🏠</button>
+  <div class="logo">PrettyUnderThree ✨</div>
+</header>
 
 <div class="container">
 
