@@ -471,7 +471,7 @@
   <!-- BUY BOX -->
   <div class="right buy-box">
 
-  <div class="price-main">$3.00</div>
+  <div class="price-main" id="mainPrice">$3.00</div>
 
   <div class="delivery">
     FREE delivery <b id="deliveryDate"></b><br>
@@ -483,11 +483,12 @@
   <div class="divider"></div>
 
   <label>Quantity:</label>
-  <select>
-    <option>1</option>
-    <option>2</option>
-    <option>3</option>
-  </select>
+    
+  <select id="quantity">
+  <option value="1">1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+</select>
 
   <label>Shade:</label>
   <select>
@@ -609,6 +610,26 @@ function updateDots(){
 // START
 showImage();
 
+
+  // =========================
+// DYNAMIC PRICE UPDATE
+// =========================
+const basePrice = 3.00;
+
+const quantitySelect = document.getElementById("quantity");
+const priceDisplay = document.getElementById("mainPrice");
+
+function updatePrice(){
+  const qty = parseInt(quantitySelect.value);
+  const total = (basePrice * qty).toFixed(2);
+  priceDisplay.innerText = `$${total}`;
+}
+
+// run when quantity changes
+quantitySelect.addEventListener("change", updatePrice);
+
+// run once on load
+updatePrice();
 
 // =========================
 // REVIEWS SYSTEM
