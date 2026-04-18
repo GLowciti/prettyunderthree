@@ -89,35 +89,108 @@ button:hover {
   font-weight: bold;
 }
 
-/* BUY BOX */
-<div class="stock-warning">⚠ Only 7 left in stock - order soon</div>
+/* ========================= */
+/* AMAZON STYLE BUY BOX */
+/* ========================= */
 
-<div class="shipping-info">
-  FREE delivery <b id="deliveryDate"></b><br>
-  <span class="fast">Or fastest delivery Tomorrow</span>
-</div>
+.buy-box {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 260px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  font-size: 14px;
 }
 
-.right select,
-.right input {
+.price-main {
+  font-size: 28px;
+  font-weight: bold;
+  color: #b12704;
+  margin-bottom: 10px;
+}
+
+.delivery {
+  margin-bottom: 10px;
+}
+
+.fast {
+  color: #007600;
+  font-weight: bold;
+}
+
+.stock {
+  color: #b12704;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.divider {
+  height: 1px;
+  background: #ddd;
+  margin: 15px 0;
+}
+
+.buy-box select {
   width: 100%;
-  padding: 10px;
-  margin-top: 10px;
+  padding: 8px;
+  margin: 5px 0 10px;
   border-radius: 6px;
   border: 1px solid #ccc;
 }
 
-.buy {
-  background: #ffa41c;
-  font-weight: bold;
-}
-
-.cart {
+/* BUTTONS */
+.cart-btn {
+  width: 100%;
   background: #ffd814;
+  border: 1px solid #fcd200;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  cursor: pointer;
   font-weight: bold;
 }
 
+.cart-btn:hover {
+  background: #f7ca00;
+}
+
+.buy-btn {
+  width: 100%;
+  background: #ffa41c;
+  border: 1px solid #ff8f00;
+  padding: 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.buy-btn:hover {
+  background: #fa8900;
+}
+
+/* INFO */
+.secure {
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+.sold-by {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #555;
+}
+
+.returns {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #007185;
+}
+
+/* ========================= */
 /* SECTIONS */
+/* ========================= */
+
 .section {
   background: white;
   margin: 20px;
@@ -134,7 +207,6 @@ button:hover {
   margin-bottom: 20px;
 }
 
-/* SUMMARY */
 .review-summary {
   display: flex;
   gap: 40px;
@@ -182,7 +254,7 @@ button:hover {
   background: #ffa41c;
 }
 
-/* REVIEW LIST */
+/* REVIEWS */
 .review-card {
   border-bottom: 1px solid #ddd;
   padding: 15px 0;
@@ -232,7 +304,7 @@ button:hover {
   text-decoration: underline;
 }
 
-/* LOAD MORE BUTTON */
+/* LOAD MORE */
 .load-more {
   display: block;
   margin: 20px auto;
@@ -260,7 +332,7 @@ button:hover {
     height: auto;
   }
 
-  .right {
+  .buy-box {
     width: 90%;
   }
 
@@ -311,24 +383,48 @@ button:hover {
   </div>
 
   <!-- BUY BOX -->
-  <div class="right">
-    <div class="price">$3.00</div>
+  <div class="right buy-box">
 
-    <label>Choose Shade:</label>
-    <select>
-      <option>Clear Shine</option>
-      <option>Pink Gloss</option>
-      <option>Cherry Red</option>
-      <option>Nude Glow</option>
-      <option>Peach Gloss</option>
-      <option>Berry Gloss</option>
-    </select>
+  <div class="price-main">$3.00</div>
 
-    <label>Quantity:</label>
-    <input type="number" value="1">
+  <div class="delivery">
+    FREE delivery <b id="deliveryDate"></b><br>
+    <span class="fast">Or fastest delivery Tomorrow</span>
+  </div>
 
-    <button class="buy" onclick="window.location.href='checkout.html'">Buy Now</button>
-    <button class="cart">Add to Cart</button>
+  <div class="stock">⚠ Only 7 left in stock - order soon</div>
+
+  <div class="divider"></div>
+
+  <label>Quantity:</label>
+  <select>
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+  </select>
+
+  <label>Shade:</label>
+  <select>
+    <option>Clear Shine</option>
+    <option>Pink Gloss</option>
+    <option>Cherry Red</option>
+    <option>Nude Glow</option>
+  </select>
+
+  <button class="cart-btn">Add to Cart</button>
+  <button class="buy-btn" onclick="window.location.href='checkout.html'">Buy Now</button>
+
+  <div class="secure">
+    🔒 Secure transaction
+  </div>
+
+  <div class="sold-by">
+    Ships from <b>PrettyUnderThree</b><br>
+    Sold by <b>PrettyUnderThree</b>
+  </div>
+
+  <div class="returns">
+    FREE returns within 30 days
   </div>
 
 </div>
