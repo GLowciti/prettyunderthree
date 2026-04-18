@@ -51,7 +51,7 @@ header{background:#000;color:gold;padding:15px;text-align:center;font-size:22px}
 .trust{display:flex;justify-content:space-between;margin-top:15px;font-size:13px;color:#444}
 
 /* ========================= */
-/* BUY BOX (DESKTOP RIGHT) */
+/* BUY BOX (FIXED RIGHT - NO MOVE) */
 /* ========================= */
 .buy-box{
   background:#fff;
@@ -60,8 +60,13 @@ header{background:#000;color:gold;padding:15px;text-align:center;font-size:22px}
   width:260px;
   border:1px solid #ddd;
   box-shadow:0 6px 18px rgba(0,0,0,.12);
-  position:sticky;
-  top:20px;
+  position:static; /* KEY FIX */
+  transition:.2s;
+}
+
+.buy-box:hover{
+  box-shadow:0 10px 25px rgba(0,0,0,.18);
+  transform:translateY(-2px);
 }
 
 .price-main{font-size:28px;font-weight:bold;color:#b12704;margin-bottom:10px}
@@ -69,6 +74,7 @@ header{background:#000;color:gold;padding:15px;text-align:center;font-size:22px}
 .fast{color:#067d62}
 .stock{color:#067d62;font-weight:bold;margin:10px 0}
 
+/* INPUTS */
 .buy-box select{
   width:100%;
   padding:10px;
@@ -89,33 +95,25 @@ header{background:#000;color:gold;padding:15px;text-align:center;font-size:22px}
   transition:.15s;
 }
 
+/* ADD TO CART */
 .cart-btn{
   background:linear-gradient(#ffe066,#ffd814);
   border:1px solid #f0c14b;
   box-shadow:0 4px 0 #caa000,0 6px 14px rgba(0,0,0,.15);
 }
+.cart-btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 #caa000,0 10px 18px rgba(0,0,0,.2)}
 
-.cart-btn:hover{
-  transform:translateY(-2px);
-  box-shadow:0 6px 0 #caa000,0 10px 18px rgba(0,0,0,.2);
-}
-
+/* BUY NOW */
 .buy-btn{
   background:linear-gradient(#2a8cff,#0071e3);
   color:#fff;
   border:none;
   box-shadow:0 4px 0 #004a99,0 6px 14px rgba(0,0,0,.2);
 }
+.buy-btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 #004a99,0 10px 18px rgba(0,0,0,.25)}
 
-.buy-btn:hover{
-  transform:translateY(-2px);
-  box-shadow:0 6px 0 #004a99,0 10px 18px rgba(0,0,0,.25);
-}
-
-.cart-btn:active,.buy-btn:active{
-  transform:translateY(2px);
-  box-shadow:0 2px 0 rgba(0,0,0,.2);
-}
+/* CLICK EFFECT */
+.cart-btn:active,.buy-btn:active{transform:translateY(2px);box-shadow:0 2px 0 rgba(0,0,0,.2)}
 
 /* EXTRA TEXT */
 .secure,.sold-by,.returns{font-size:13px;margin-top:10px}
@@ -134,65 +132,26 @@ header{background:#000;color:gold;padding:15px;text-align:center;font-size:22px}
 .review-actions{font-size:12px;color:#555;margin-top:5px}
 
 /* ========================= */
-/* MOBILE (FIXED PROPERLY) */
+/* MOBILE (CLEAN + NOT FLOATING) */
 /* ========================= */
-/* ========================= */
-/* MOBILE (FIXED BUY BOX) */
-/* ========================= */
-@media (max-width: 768px){
+@media (max-width:768px){
+  .container{flex-direction:column;align-items:center}
+  .middle{max-width:100%}
 
-  .container{
-    flex-direction:column;
-    align-items:center;
-    padding-bottom:120px; /* prevents content being hidden behind box */
-  }
-
-  /* BUY BOX FIXED AT BOTTOM */
   .buy-box{
-    position:fixed;
-    bottom:0;
-    left:0;
-    right:0;
-
     width:100%;
-    max-width:none;
-    border-radius:16px 16px 0 0;
-
-    padding:12px;
-    z-index:999;
-
-    box-shadow:0 -6px 20px rgba(0,0,0,.2);
+    max-width:400px;
+    position:static; /* ensure no movement */
+    margin-top:20px;
   }
 
-  /* COMPACT TEXT */
-  .price-main{font-size:20px;margin-bottom:5px}
-  .delivery,.stock{font-size:12px}
-
-  /* HIDE EXTRA CLUTTER */
-  .buy-box .secure,
-  .buy-box .sold-by,
-  .buy-box .returns{
-    display:none;
-  }
-
-  /* SELECTS SMALLER */
-  .buy-box select{
-    padding:8px;
-    font-size:13px;
-    margin-top:6px;
-  }
-
-  /* BUTTONS SIDE BY SIDE */
   .cart-btn,.buy-btn{
-    width:48%;
-    display:inline-block;
-    padding:12px;
-    font-size:14px;
-    border-radius:8px;
+    padding:14px;
+    font-size:15px;
   }
 
-  .cart-btn{margin-right:4%}
-
+  .section{margin:10px;padding:15px}
+  .review-text{font-size:13px}
 }
   </style>
 </head>
