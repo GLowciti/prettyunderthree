@@ -362,32 +362,36 @@ header{background:#000;color:gold;padding:15px;text-align:center;font-size:22px}
 </div>
 
 <script>
+// =========================
+// IMAGE GALLERY
+// =========================
 const images = [
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRk_eRLlnsaHoYRBeB0KfKWR5cBYYPDjJbODw&s",
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFcKOXKM2BV6f85q0UWUQjMmMLhKeF_VAHDg&s",
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTorXWtE52HwdFM9bxUMH1OmfV4H5dQctLy_w&s",
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBS_BrphjmpVOzUlp_HXlTAnnb15MkS5WKZQ&s",
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScCPAfohN5MN8-oyRMHufxLEnkExcgrvOnTA&s",
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ29jMmq0MPLY4Ga2INaPRO9Z7NHPDK_5zb8g&s"];
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ29jMmq0MPLY4Ga2INaPRO9Z7NHPDK_5zb8g&s"
+];
 
 let index = 0;
 
-function showImage() {
+function showImage(){
   document.getElementById("productImage").src = images[index];
   updateDots();
 }
 
-function nextImg() {
+function nextImg(){
   index = (index + 1) % images.length;
   showImage();
 }
 
-function prevImg() {
+function prevImg(){
   index = (index - 1 + images.length) % images.length;
   showImage();
 }
 
-function setImg(i) {
+function setImg(i){
   index = i;
   showImage();
 }
@@ -402,42 +406,45 @@ images.forEach((_, i) => {
   dotsContainer.appendChild(dot);
 });
 
-function updateDots() {
+function updateDots(){
   const dots = document.querySelectorAll(".dot");
   dots.forEach((d, i) => {
     d.classList.remove("active-dot");
-    if (i === index) d.classList.add("active-dot");
+    if(i === index) d.classList.add("active-dot");
   });
 }
 
 // START
 showImage();
 
-  // REALISTIC SAMPLE REVIEWS (replace with real ones later)
+
+// =========================
+// REVIEWS SYSTEM
+// =========================
 const allReviews = [
-  {name:"Jasmine R.", stars:5, title:"Amazing gloss!", text:"Super glossy and not sticky at all. Looks expensive!", verified:true},
-  {name:"Mia T.", stars:5, title:"So shiny 💖", text:"Honestly feels like a luxury brand gloss.", verified:true},
-  {name:"Kayla S.", stars:4, title:"Pretty good", text:"Nice shine, lasts a decent time.", verified:true},
-  {name:"Aaliyah B.", stars:5, title:"Love it", text:"My lips look fuller instantly.", verified:true},
-  {name:"Brianna L.", stars:5, title:"Worth it", text:"Bought 2 sets already!", verified:true},
-  {name:"Sofia M.", stars:4, title:"Nice", text:"Good everyday gloss.", verified:false},
-  {name:"Emily K.", stars:5, title:"Perfect", text:"My go-to gloss now.", verified:true},
-  {name:"Zoe D.", stars:5, title:"Smells great", text:"Feels soft and smooth.", verified:false},
-  {name:"Nia W.", stars:4, title:"Pretty shades", text:"Love the nude one.", verified:true},
-  {name:"Hannah C.", stars:5, title:"Buying again", text:"Definitely recommend.", verified:true}
+  {name:"Jasmine R.",stars:5,title:"Amazing gloss!",text:"Super glossy and not sticky at all. Looks expensive!",verified:true},
+  {name:"Mia T.",stars:5,title:"So shiny 💖",text:"Honestly feels like a luxury brand gloss.",verified:true},
+  {name:"Kayla S.",stars:4,title:"Pretty good",text:"Nice shine, lasts a decent time.",verified:true},
+  {name:"Aaliyah B.",stars:5,title:"Love it",text:"My lips look fuller instantly.",verified:true},
+  {name:"Brianna L.",stars:5,title:"Worth it",text:"Bought 2 sets already!",verified:true},
+  {name:"Sofia M.",stars:4,title:"Nice",text:"Good everyday gloss.",verified:false},
+  {name:"Emily K.",stars:5,title:"Perfect",text:"My go-to gloss now.",verified:true},
+  {name:"Zoe D.",stars:5,title:"Smells great",text:"Feels soft and smooth.",verified:false},
+  {name:"Nia W.",stars:4,title:"Pretty shades",text:"Love the nude one.",verified:true},
+  {name:"Hannah C.",stars:5,title:"Buying again",text:"Definitely recommend.",verified:true}
 ];
 
 let reviewIndex = 0;
 
-function renderStars(num) {
+function renderStars(num){
   return "★".repeat(num) + "☆".repeat(5 - num);
 }
 
-function loadMoreReviews() {
+function loadMoreReviews(){
   const container = document.getElementById("reviews");
 
-  for (let i = 0; i < 3; i++) {
-    if (reviewIndex >= allReviews.length) return;
+  for(let i=0;i<3;i++){
+    if(reviewIndex >= allReviews.length) return;
 
     const r = allReviews[reviewIndex];
 
@@ -449,11 +456,9 @@ function loadMoreReviews() {
         <span class="review-name">${r.name}</span>
         ${r.verified ? `<span class="verified">✔ Verified Purchase</span>` : ""}
       </div>
-
       <div class="review-stars">${renderStars(r.stars)}</div>
       <div class="review-title">${r.title}</div>
       <div class="review-text">${r.text}</div>
-
       <div class="review-actions">Helpful 👍</div>
     `;
 
@@ -462,48 +467,48 @@ function loadMoreReviews() {
   }
 }
 
-// load first batch
+// LOAD FIRST REVIEWS
 loadMoreReviews();
 
 
-  // DELIVERY DATE GENERATOR (3–5 days random like real stores)
-function getDeliveryDate() {
+// =========================
+// DELIVERY DATE GENERATOR
+// =========================
+function getDeliveryDate(){
   const today = new Date();
-
-  // random between 3–5 days
   const daysToAdd = Math.floor(Math.random() * 3) + 3;
 
   today.setDate(today.getDate() + daysToAdd);
 
-  return today.toLocaleDateString(undefined, {
-    weekday: "long",
-    month: "long",
-    day: "numeric"
+  return today.toLocaleDateString(undefined,{
+    weekday:"long",
+    month:"long",
+    day:"numeric"
   });
 }
 
 document.getElementById("deliveryDate").innerText = getDeliveryDate();
 
-  
-  const scrollBtn = document.getElementById("scrollTopBtn");
 
-// show button after scrolling down
+// =========================
+// SCROLL TO TOP BUTTON
+// =========================
+const scrollBtn = document.getElementById("scrollTopBtn");
+
 window.addEventListener("scroll", () => {
-  if (window.scrollY > 400) {
+  if(window.scrollY > 400){
     scrollBtn.classList.add("show");
   } else {
     scrollBtn.classList.remove("show");
   }
 });
 
-// scroll to top when clicked
 scrollBtn.onclick = () => {
   window.scrollTo({
     top: 0,
     behavior: "smooth"
   });
 };
-  
 </script>
 
 </body>
