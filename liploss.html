@@ -6,96 +6,268 @@
 
   <style>
     body {
-      font-family: Arial;
-      margin: 0;
-      background: #f3f3f3;
-    }
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f3f3f3;
+}
 
-    header {
-      background: black;
-      color: gold;
-      padding: 15px;
-      text-align: center;
-      font-size: 22px;
-    }
+/* HEADER */
+header {
+  background: black;
+  color: gold;
+  padding: 15px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+}
 
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      padding: 30px;
-      gap: 40px;
-      justify-content: center;
-    }
+/* MAIN LAYOUT */
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 30px;
+  gap: 40px;
+  justify-content: center;
+}
 
-    .gallery {
-      text-align: center;
-    }
+/* IMAGE GALLERY */
+.gallery {
+  text-align: center;
+}
 
-    .main-img {
-      width: 320px;
-      height: 320px;
-      object-fit: cover;
-      border-radius: 10px;
-      background: white;
-      padding: 10px;
-    }
+.main-img {
+  width: 320px;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 10px;
+  background: white;
+  padding: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
 
-    button {
-      padding: 10px;
-      margin: 5px;
-      cursor: pointer;
-    }
+/* BUTTONS */
+button {
+  padding: 10px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 6px;
+  border: none;
+  transition: 0.2s;
+}
 
-    #dots {
-      margin-top: 10px;
-    }
+button:hover {
+  opacity: 0.9;
+}
 
-    .dot {
-      height: 10px;
-      width: 10px;
-      margin: 5px;
-      background: #bbb;
-      display: inline-block;
-      border-radius: 50%;
-      cursor: pointer;
-    }
+/* DOTS */
+#dots {
+  margin-top: 10px;
+}
 
-    .active-dot {
-      background: #ff4da6;
-    }
+.dot {
+  height: 10px;
+  width: 10px;
+  margin: 5px;
+  background: #bbb;
+  display: inline-block;
+  border-radius: 50%;
+  cursor: pointer;
+}
 
-    .middle {
-      max-width: 400px;
-    }
+.active-dot {
+  background: #ff4da6;
+}
 
-    .price {
-      color: #b12704;
-      font-size: 26px;
-      font-weight: bold;
-    }
+/* PRODUCT DETAILS */
+.middle {
+  max-width: 400px;
+}
 
-    .right {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      width: 250px;
-    }
+.price {
+  color: #b12704;
+  font-size: 26px;
+  font-weight: bold;
+}
 
-    .right select, .right input {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-    }
+/* BUY BOX */
+.right {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 250px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
 
-    .buy { background: #ffa41c; border: none; }
-    .cart { background: #ffd814; border: none; }
+.right select,
+.right input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
 
-    .section {
-      background: white;
-      margin: 20px;
-      padding: 20px;
-      border-radius: 10px;
-    }
+.buy {
+  background: #ffa41c;
+  font-weight: bold;
+}
+
+.cart {
+  background: #ffd814;
+  font-weight: bold;
+}
+
+/* SECTIONS */
+.section {
+  background: white;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+/* ========================= */
+/* AMAZON-STYLE REVIEWS */
+/* ========================= */
+
+.reviews-section h2 {
+  margin-bottom: 20px;
+}
+
+/* SUMMARY */
+.review-summary {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.summary-left {
+  min-width: 150px;
+}
+
+.big-rating {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.stars {
+  color: #ffa41c;
+  font-size: 18px;
+}
+
+.total-reviews {
+  font-size: 14px;
+  color: #555;
+}
+
+/* RATING BARS */
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.bar {
+  flex: 1;
+  height: 10px;
+  background: #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.bar div {
+  height: 100%;
+  background: #ffa41c;
+}
+
+/* REVIEW LIST */
+.review-card {
+  border-bottom: 1px solid #ddd;
+  padding: 15px 0;
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.review-name {
+  font-weight: bold;
+}
+
+.verified {
+  color: #c45500;
+  font-size: 12px;
+}
+
+.review-stars {
+  color: #ffa41c;
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.review-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.review-text {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.4;
+}
+
+.review-actions {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #007185;
+  cursor: pointer;
+}
+
+.review-actions:hover {
+  text-decoration: underline;
+}
+
+/* LOAD MORE BUTTON */
+.load-more {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background: #ffd814;
+  border: 1px solid #fcd200;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.load-more:hover {
+  background: #f7ca00;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .main-img {
+    width: 90%;
+    height: auto;
+  }
+
+  .right {
+    width: 90%;
+  }
+
+  .review-summary {
+    flex-direction: column;
+  }
+}
   </style>
 </head>
 
@@ -253,16 +425,16 @@ showImage();
 
   // REALISTIC SAMPLE REVIEWS (replace with real ones later)
 const allReviews = [
-  {name:"Jasmine R.", stars:5, text:"Super glossy and not sticky at all, I love it!"},
-  {name:"Mia T.", stars:5, text:"Looks like expensive lip gloss honestly 💕"},
-  {name:"Kayla S.", stars:4, text:"Really shiny and smooth, good for the price"},
-  {name:"Aaliyah B.", stars:5, text:"My lips look fuller instantly ✨"},
-  {name:"Brianna L.", stars:5, text:"Bought 2 sets, worth it!"},
-  {name:"Sofia M.", stars:4, text:"Nice shine, lasts a decent time"},
-  {name:"Emily K.", stars:5, text:"Perfect everyday gloss 💖"},
-  {name:"Zoe D.", stars:5, text:"Smells good and feels soft"},
-  {name:"Nia W.", stars:4, text:"Pretty colors, I like the nude one best"},
-  {name:"Hannah C.", stars:5, text:"Definitely buying again"}
+  {name:"Jasmine R.", stars:5, title:"Amazing gloss!", text:"Super glossy and not sticky at all. Looks expensive!", verified:true},
+  {name:"Mia T.", stars:5, title:"So shiny 💖", text:"Honestly feels like a luxury brand gloss.", verified:true},
+  {name:"Kayla S.", stars:4, title:"Pretty good", text:"Nice shine, lasts a decent time.", verified:true},
+  {name:"Aaliyah B.", stars:5, title:"Love it", text:"My lips look fuller instantly.", verified:true},
+  {name:"Brianna L.", stars:5, title:"Worth it", text:"Bought 2 sets already!", verified:true},
+  {name:"Sofia M.", stars:4, title:"Nice", text:"Good everyday gloss.", verified:false},
+  {name:"Emily K.", stars:5, title:"Perfect", text:"My go-to gloss now.", verified:true},
+  {name:"Zoe D.", stars:5, title:"Smells great", text:"Feels soft and smooth.", verified:false},
+  {name:"Nia W.", stars:4, title:"Pretty shades", text:"Love the nude one.", verified:true},
+  {name:"Hannah C.", stars:5, title:"Buying again", text:"Definitely recommend.", verified:true}
 ];
 
 let reviewIndex = 0;
@@ -280,12 +452,19 @@ function loadMoreReviews() {
     const r = allReviews[reviewIndex];
 
     const div = document.createElement("div");
-    div.className = "review-box";
+    div.className = "review-card";
 
     div.innerHTML = `
-      <div class="review-name">${r.name}</div>
+      <div class="review-header">
+        <span class="review-name">${r.name}</span>
+        ${r.verified ? `<span class="verified">✔ Verified Purchase</span>` : ""}
+      </div>
+
       <div class="review-stars">${renderStars(r.stars)}</div>
+      <div class="review-title">${r.title}</div>
       <div class="review-text">${r.text}</div>
+
+      <div class="review-actions">Helpful 👍</div>
     `;
 
     container.appendChild(div);
@@ -293,7 +472,7 @@ function loadMoreReviews() {
   }
 }
 
-// load first reviews automatically
+// load first batch
 loadMoreReviews();
   
 </script>
