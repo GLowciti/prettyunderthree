@@ -165,20 +165,26 @@
 </footer>
 
 <script>
-// COUNTDOWN TIMER (15 minutes reset)
-let time = 900;
+// RANDOM around 3 days (between ~2.5 and 3.5 days)
+let time = Math.floor(216000 + Math.random() * 86400);
+// 216000 = 2.5 days, + up to 1 extra day
 
 function updateTimer() {
-  let minutes = Math.floor(time / 60);
+  let days = Math.floor(time / 86400);
+  let hours = Math.floor((time % 86400) / 3600);
+  let minutes = Math.floor((time % 3600) / 60);
   let seconds = time % 60;
+
   document.getElementById("countdown").innerText =
-    minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+    days + "d " +
+    hours + "h " +
+    minutes + "m " +
+    (seconds < 10 ? "0" : "") + seconds + "s";
 
   if (time > 0) time--;
 }
 
 setInterval(updateTimer, 1000);
-
 // FAKE STOCK DROPPER (looks dynamic)
 let stock = 12;
 
