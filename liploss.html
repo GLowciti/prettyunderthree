@@ -141,16 +141,57 @@ header{background:#000;color:gold;padding:15px;text-align:center;font-size:22px}
 /* ========================= */
 @media (max-width: 768px){
 
+  .container{
+    flex-direction:column;
+    align-items:center;
+    padding-bottom:120px; /* prevents content being hidden behind box */
+  }
+
+  /* BUY BOX FIXED AT BOTTOM */
   .buy-box{
     position:fixed;
-    top:20px;      /* keeps same visual position */
-    right:10px;    /* keeps it on the right side */
-    left:auto;
-    bottom:auto;
+    bottom:0;
+    left:0;
+    right:0;
 
-    width:260px;   /* SAME as desktop */
+    width:100%;
+    max-width:none;
+    border-radius:16px 16px 0 0;
+
+    padding:12px;
     z-index:999;
+
+    box-shadow:0 -6px 20px rgba(0,0,0,.2);
   }
+
+  /* COMPACT TEXT */
+  .price-main{font-size:20px;margin-bottom:5px}
+  .delivery,.stock{font-size:12px}
+
+  /* HIDE EXTRA CLUTTER */
+  .buy-box .secure,
+  .buy-box .sold-by,
+  .buy-box .returns{
+    display:none;
+  }
+
+  /* SELECTS SMALLER */
+  .buy-box select{
+    padding:8px;
+    font-size:13px;
+    margin-top:6px;
+  }
+
+  /* BUTTONS SIDE BY SIDE */
+  .cart-btn,.buy-btn{
+    width:48%;
+    display:inline-block;
+    padding:12px;
+    font-size:14px;
+    border-radius:8px;
+  }
+
+  .cart-btn{margin-right:4%}
 
 }
   </style>
