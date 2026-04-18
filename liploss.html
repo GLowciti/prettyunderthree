@@ -11,17 +11,15 @@
   background: #f3f3f3;
 }
 
-/* HEADER */
 header {
   background: black;
   color: gold;
   padding: 15px;
   text-align: center;
   font-size: 22px;
-  font-weight: bold;
 }
 
-/* MAIN LAYOUT */
+/* LAYOUT */
 .container {
   display: flex;
   flex-wrap: wrap;
@@ -30,7 +28,7 @@ header {
   justify-content: center;
 }
 
-/* IMAGE GALLERY */
+/* IMAGE */
 .gallery {
   text-align: center;
 }
@@ -42,27 +40,11 @@ header {
   border-radius: 10px;
   background: white;
   padding: 10px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-/* BUTTONS */
-button {
-  padding: 10px;
-  margin: 5px;
-  cursor: pointer;
-  border-radius: 6px;
-  border: none;
-  transition: 0.2s;
-}
-
-button:hover {
-  opacity: 0.9;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 /* DOTS */
-#dots {
-  margin-top: 10px;
-}
+#dots { margin-top: 10px; }
 
 .dot {
   height: 10px;
@@ -74,152 +56,28 @@ button:hover {
   cursor: pointer;
 }
 
-.active-dot {
-  background: #ff4da6;
-}
+.active-dot { background: #ff4da6; }
 
-/* PRODUCT DETAILS */
+/* PRODUCT INFO */
 .middle {
-  max-width: 400px;
+  max-width: 420px;
 }
 
-.price {
-  color: #b12704;
-  font-size: 26px;
-  font-weight: bold;
-}
-
-/* ========================= */
-/* AMAZON STYLE BUY BOX */
-/* ========================= */
-
-.buy-box {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 260px;
-  border: 1px solid #ddd;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  font-size: 14px;
-}
-
-.price-main {
+/* TITLE */
+.product-title {
   font-size: 28px;
-  font-weight: bold;
-  color: #b12704;
+  font-weight: 800;
   margin-bottom: 10px;
+  color: #111;
 }
 
-.delivery {
-  margin-bottom: 10px;
-}
-
-.fast {
-  color: #007600;
-  font-weight: bold;
-}
-
-.stock {
-  color: #b12704;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.divider {
-  height: 1px;
-  background: #ddd;
-  margin: 15px 0;
-}
-
-.buy-box select {
-  width: 100%;
-  padding: 8px;
-  margin: 5px 0 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-/* BUTTONS */
-.cart-btn {
-  width: 100%;
-  background: #ffd814;
-  border: 1px solid #fcd200;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.cart-btn:hover {
-  background: #f7ca00;
-}
-
-.buy-btn {
-  width: 100%;
-  background: #ffa41c;
-  border: 1px solid #ff8f00;
-  padding: 10px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.buy-btn:hover {
-  background: #fa8900;
-}
-
-/* INFO */
-.secure {
-  font-size: 13px;
-  margin-top: 10px;
-}
-
-.sold-by {
-  margin-top: 10px;
-  font-size: 13px;
-  color: #555;
-}
-
-.returns {
-  margin-top: 10px;
-  font-size: 13px;
-  color: #007185;
-}
-
-/* ========================= */
-/* SECTIONS */
-/* ========================= */
-
-.section {
-  background: white;
-  margin: 20px;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-}
-
-/* ========================= */
-/* AMAZON-STYLE REVIEWS */
-/* ========================= */
-
-.reviews-section h2 {
-  margin-bottom: 20px;
-}
-
-.review-summary {
+/* RATING */
+.rating-row {
   display: flex;
-  gap: 40px;
-  flex-wrap: wrap;
-}
-
-.summary-left {
-  min-width: 150px;
-}
-
-.big-rating {
-  font-size: 40px;
-  font-weight: bold;
+  gap: 10px;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 10px;
 }
 
 .stars {
@@ -227,36 +85,187 @@ button:hover {
   font-size: 18px;
 }
 
-.total-reviews {
-  font-size: 14px;
+.rating-count {
   color: #555;
 }
 
-/* RATING BARS */
-.bar-row {
+.bought {
+  color: #067d62;
+  font-weight: bold;
+}
+
+/* PRICE */
+.price-section {
   display: flex;
   align-items: center;
+  gap: 12px;
+  margin: 15px 0;
+}
+
+.sale {
+  font-size: 34px;
+  font-weight: 800;
+  color: #b12704;
+}
+
+.was {
+  text-decoration: line-through;
+  color: #777;
+  font-size: 18px;
+}
+
+.save {
+  background: #cc0c39;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+/* URGENCY */
+.urgency {
+  background: #fff3cd;
+  color: #856404;
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* DESCRIPTION */
+.desc {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* BENEFITS */
+.benefits {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
+  margin: 15px 0;
+}
+
+.benefit {
+  background: #f7f7f7;
+  padding: 10px;
+  border-radius: 8px;
   font-size: 14px;
-  margin: 5px 0;
+  text-align: center;
 }
 
-.bar {
-  flex: 1;
-  height: 10px;
-  background: #ddd;
-  border-radius: 5px;
-  overflow: hidden;
+/* FEATURES */
+.features-box {
+  border: 1px solid #eee;
+  padding: 15px;
+  border-radius: 10px;
+  background: #fafafa;
+  margin-top: 10px;
 }
 
-.bar div {
-  height: 100%;
+.features-box h3 {
+  margin-top: 0;
+  font-size: 16px;
+}
+
+.features-box ul {
+  padding-left: 18px;
+}
+
+.features-box li {
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+/* TRUST */
+.trust {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  font-size: 13px;
+  color: #444;
+}
+
+/* BUY BOX (AMAZON STYLE) */
+.right {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 260px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.right .price {
+  font-size: 26px;
+  color: #b12704;
+  font-weight: bold;
+}
+
+.right select,
+.right input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+/* BUTTONS */
+.buy {
   background: #ffa41c;
+  border: none;
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
-/* REVIEWS */
-.review-card {
-  border-bottom: 1px solid #ddd;
+.buy:hover {
+  background: #ff8f00;
+}
+
+.cart {
+  background: #ffd814;
+  border: none;
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cart:hover {
+  background: #f7ca00;
+}
+
+/* STOCK + DELIVERY */
+.stock {
+  color: #067d62;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.delivery {
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+/* SECTIONS */
+.section {
+  background: white;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* REVIEWS (AMAZON STYLE) */
+.review-box {
+  border-bottom: 1px solid #eee;
   padding: 15px 0;
 }
 
@@ -264,11 +273,11 @@ button:hover {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 14px;
 }
 
 .review-name {
   font-weight: bold;
+  font-size: 14px;
 }
 
 .verified {
@@ -278,46 +287,33 @@ button:hover {
 
 .review-stars {
   color: #ffa41c;
-  margin: 5px 0;
   font-size: 14px;
-}
-
-.review-title {
-  font-weight: bold;
-  margin-bottom: 5px;
+  margin: 5px 0;
 }
 
 .review-text {
   font-size: 14px;
   color: #333;
-  line-height: 1.4;
 }
 
-.review-actions {
-  margin-top: 8px;
-  font-size: 13px;
-  color: #007185;
+.review-date {
+  font-size: 12px;
+  color: #777;
+  margin-top: 5px;
+}
+
+/* LOAD MORE BUTTON */
+.section button {
+  margin-top: 15px;
+  padding: 10px;
+  background: #e7e9ec;
+  border: 1px solid #ccc;
+  border-radius: 6px;
   cursor: pointer;
 }
 
-.review-actions:hover {
-  text-decoration: underline;
-}
-
-/* LOAD MORE */
-.load-more {
-  display: block;
-  margin: 20px auto;
-  padding: 10px 20px;
-  background: #ffd814;
-  border: 1px solid #fcd200;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.load-more:hover {
-  background: #f7ca00;
+.section button:hover {
+  background: #dcdcdc;
 }
 
 /* MOBILE */
@@ -327,17 +323,9 @@ button:hover {
     align-items: center;
   }
 
-  .main-img {
-    width: 90%;
-    height: auto;
-  }
-
-  .buy-box {
-    width: 90%;
-  }
-
-  .review-summary {
-    flex-direction: column;
+  .right {
+    width: 100%;
+    max-width: 400px;
   }
 }
   </style>
@@ -365,22 +353,65 @@ button:hover {
 
   <!-- DETAILS -->
   <div class="middle">
-    <h2>Luxury Glossy Lip Set (3 Pack)</h2>
-    <div class="price">$3.00</div>
 
-    <p>
-      Get that luxury glossy look inspired by high-end beauty brands 💄✨
-      This lip gloss set delivers shine, hydration, and a fuller lip effect.
-    </p>
+  <!-- TITLE -->
+  <h1 class="product-title">
+    Luxury Glossy Lip Set (3 Pack)
+  </h1>
 
-    <h3>Details:</h3>
+  <!-- RATING -->
+  <div class="rating-row">
+    <span class="stars">★★★★★</span>
+    <span class="rating-count">1,284 ratings</span>
+    <span class="bought">🔥 3,200+ bought this week</span>
+  </div>
+
+  <!-- PRICE -->
+  <div class="price-section">
+    <span class="sale">$3.00</span>
+    <span class="was">$53.99</span>
+    <span class="save">94% OFF</span>
+  </div>
+
+  <!-- URGENCY -->
+  <div class="urgency">
+    ⚡ Limited-Time Sale — Ends Soon
+  </div>
+
+  <!-- SHORT DESCRIPTION -->
+  <p class="desc">
+    Get that **luxury, glass-like shine** seen in high-end beauty brands 💄✨  
+    This ultra-smooth lip gloss instantly enhances your lips with a fuller, hydrated, high-shine finish — without the sticky feel.
+  </p>
+
+  <!-- BENEFITS -->
+  <div class="benefits">
+    <div class="benefit">💧 Deep Hydration</div>
+    <div class="benefit">✨ Extreme Gloss Shine</div>
+    <div class="benefit">💋 Fuller Lip Effect</div>
+    <div class="benefit">🧴 Non-Sticky Formula</div>
+  </div>
+
+  <!-- FEATURES BOX -->
+  <div class="features-box">
+    <h3>✔ Why Everyone Loves It</h3>
     <ul>
-      <li>3 glosses per set</li>
-      <li>5ml each</li>
-      <li>High shine</li>
-      <li>Non-sticky</li>
+      <li>3 premium glosses included (5ml each)</li>
+      <li>Smooth glide, no clumping</li>
+      <li>Long-lasting shine that stays fresh</li>
+      <li>Perfect for everyday or glam looks</li>
+      <li>Compact & travel-friendly design</li>
     </ul>
   </div>
+
+  <!-- TRUST BADGES -->
+  <div class="trust">
+    <div>🔒 Secure Checkout</div>
+    <div>🚚 Free Shipping</div>
+    <div>💯 30-Day Guarantee</div>
+  </div>
+
+</div>
 
   <!-- BUY BOX -->
   <div class="right buy-box">
