@@ -398,7 +398,56 @@ h1,h2,h3{margin:0}
   transform:translateY(-3px);
   background:#005bb5;
 }
+    
+/* ========================= */
+/* LOADING SCREEN */
+/* ========================= */
+#loadingScreen{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(255,255,255,0.95);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+  opacity:0;
+  pointer-events:none;
+  transition:.3s;
+}
 
+#loadingScreen.show{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.loader-box{
+  text-align:center;
+}
+
+.spinner{
+  width:60px;
+  height:60px;
+  border:6px solid #eee;
+  border-top:6px solid #ff4da6;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+  margin:auto;
+  margin-bottom:15px;
+}
+
+@keyframes spin{
+  from{transform:rotate(0deg);}
+  to{transform:rotate(360deg);}
+}
+
+.loader-box p{
+  font-size:16px;
+  font-weight:bold;
+  color:#333;
+}
 
   </style>
   
@@ -428,6 +477,14 @@ h1,h2,h3{margin:0}
     <div id="dots"></div>
 
   </div>
+
+  <!-- LOADING OVERLAY -->
+<div id="loadingScreen">
+  <div class="loader-box">
+    <div class="spinner"></div>
+    <p>Setting up secure payment request...</p>
+  </div>
+</div>
 
   <!-- BACK2TOP -->  
   <div id="scrollTopBtn">⌃</div>
@@ -527,7 +584,7 @@ h1,h2,h3{margin:0}
   </select>
 
   <button class="cart-btn">Add to Cart</button>
-  <button class="buy-btn" onclick="window.location.href='checkout.html'">Buy Now</button>
+  <button class="buy-btn" onclick="startCheckout()">Buy Now</button>
 
   <div class="secure">
     🔒 Secure transaction
@@ -783,6 +840,23 @@ scrollBtn.onclick = () => {
     behavior: "smooth"
   });
 };
+
+  function startCheckout(){
+    const messages = [
+  "Setting up secure payment request...",
+  "Encrypting your order...",
+  "Connecting to checkout...",
+  "Almost ready..."
+];
+  const loader = document.getElementById("loadingScreen");
+
+  loader.classList.add("show");
+
+  // Fake loading delay (feels real)
+  setTimeout(() => {
+    window.location.href = "checkout.html";
+  }, 1800); // 1.8 seconds
+}
 
 
 // =========================
