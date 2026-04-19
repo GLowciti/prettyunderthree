@@ -842,22 +842,35 @@ scrollBtn.onclick = () => {
 };
 
   function startCheckout(){
-    const messages = [
-  "Setting up secure payment request...",
-  "Encrypting your order...",
-  "Connecting to checkout...",
-  "Almost ready..."
-];
+  const messages = [
+    "Setting up secure payment request...",
+    "Encrypting your order...",
+    "Connecting to secure checkout...",
+    "Finalizing details...",
+    "Almost ready..."
+  ];
+
   const loader = document.getElementById("loadingScreen");
+  const text = document.getElementById("loadingText");
 
   loader.classList.add("show");
 
-  // Fake loading delay (feels real)
-  setTimeout(() => {
-    window.location.href = "checkout.html";
-  }, 1800); // 1.8 seconds
-}
+  let i = 0;
 
+  // Change text every ~600ms
+  const interval = setInterval(() => {
+    i++;
+    if(i < messages.length){
+      text.innerText = messages[i];
+    }
+  }, 600);
+
+  // Redirect after full sequence
+  setTimeout(() => {
+    clearInterval(interval);
+    window.location.href = "checkout.html";
+  }, 3000); // total time
+}
 
 // =========================
 // REVIEW SUMMARY (AUTO BUILD)
