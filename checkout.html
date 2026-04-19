@@ -5,152 +5,87 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
-    *{
-  box-sizing:border-box;
-}
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+    }
 
-body{
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg,#f5f5f5,#eeeeee);
-  margin:0;
-}
+    header {
+      background: black;
+      color: gold;
+      padding: 15px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+    }
 
-/* HEADER */
-header{
-  background: linear-gradient(90deg,#000,#222);
-  color: gold;
-  padding: 18px;
-  text-align:center;
-  font-size:22px;
-  font-weight:bold;
-  letter-spacing:1px;
-  box-shadow:0 4px 15px rgba(0,0,0,0.2);
-}
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 15px;
+      display: flex;
+      gap: 20px;
+    }
 
-/* LAYOUT */
-.container{
-  max-width:1100px;
-  margin:auto;
-  padding:20px;
-  display:flex;
-  gap:25px;
-}
+    .left, .right {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+    }
 
-/* LEFT SIDE */
-.left{
-  flex:2;
-  background:#fff;
-  padding:25px;
-  border-radius:16px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.08);
-}
+    .left { flex: 2; }
+    .right { flex: 1; }
 
-/* RIGHT SIDE (UPGRADED) */
-.right{
-  flex:1;
-  background:#fff;
-  padding:18px;
-  border-radius:8px;
-  border:1px solid #d5d9d9;
-  position:sticky;
-  top:20px;
-  height:fit-content;
-  box-shadow:0 2px 5px rgba(0,0,0,0.08);
-}
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
 
-/* Title */
-.right h3{
-  font-size:18px;
-  margin-bottom:15px;
-  font-weight:600;
-}
+    .row {
+      display: flex;
+      gap: 10px;
+    }
 
-/* PRODUCT ROW */
-.product-card{
-  display:flex;
-  gap:10px;
-  margin-bottom:15px;
-  align-items:flex-start;
-}
+    button {
+      width: 100%;
+      padding: 15px;
+      margin-top: 10px;
+      background: #ffa41c;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: bold;
+    }
 
-.product-img{
-  width:60px;
-  height:60px;
-  object-fit:cover;
-  border-radius:4px;
-  border:1px solid #ddd;
-}
+    .secondary {
+      background: #ddd;
+    }
 
-.product-details{
-  flex:1;
-}
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 8px 0;
+    }
 
-.product-name{
-  font-size:14px;
-  font-weight:500;
-  color:#0f1111;
-}
+    .total {
+      font-weight: bold;
+      font-size: 18px;
+      color: #b12704;
+    }
 
-.product-desc{
-  font-size:12px;
-  color:#565959;
-  margin-top:2px;
-}
+    .step { display: none; }
+    .active { display: block; }
 
-.product-meta{
-  font-size:12px;
-  color:#007600;
-  margin-top:3px;
-}
-
-.product-price{
-  font-size:14px;
-  font-weight:bold;
-}
-
-/* DIVIDER */
-.divider{
-  height:1px;
-  background:#e7e7e7;
-  margin:12px 0;
-}
-
-/* SUMMARY */
-.summary-row{
-  display:flex;
-  justify-content:space-between;
-  font-size:14px;
-  margin:6px 0;
-}
-
-.total{
-  font-size:18px;
-  font-weight:bold;
-  color:#b12704;
-}
-
-/* CHECKOUT BUTTON */
-.amazon-btn{
-  width:100%;
-  background:linear-gradient(#ffd814,#f7ca00);
-  border:1px solid #fcd200;
-  padding:12px;
-  border-radius:8px;
-  font-weight:bold;
-  cursor:pointer;
-  margin-top:10px;
-}
-
-.amazon-btn:hover{
-  background:linear-gradient(#f7ca00,#f2c200);
-}
-
-/* TRUST TEXT */
-.secure-box{
-  font-size:12px;
-  color:#565959;
-  margin-top:10px;
-}
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+    }
   </style>
 </head>
 
@@ -211,68 +146,37 @@ header{
       <button class="secondary" onclick="backToShipping()">Back</button>
 
     </div>
-    <div class="trust">
-  🔒 Secure SSL Checkout<br>
-  💳 Visa • Mastercard • Amex<br>
-  🚚 Fast & Free Shipping
-</div>
 
   </div>
 
   <!-- RIGHT -->
   <div class="right">
 
-  <h3>Order Summary</h3>
+    <h3>Summary</h3>
 
-  <!-- PRODUCT -->
-  <div class="product-card">
-    <img class="product-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSy4dlkPpe_g2plWiHiItwpZ1EUu3OTYTViQ&s">
-
-    <div class="product-details">
-      <div class="product-name">Luxury Glossy Lip Set (3 Pack)</div>
-      <div class="product-desc">High-shine, non-sticky gloss for a smooth finish.</div>
-      <div class="product-meta">In Stock</div>
+    <div class="summary-row">
+      <span>Items</span>
+      <span>$3</span>
     </div>
 
-    <div class="product-price">$3.00</div>
+    <div class="summary-row">
+      <span>Shipping</span>
+      <span style="color:green;">FREE</span>
+    </div>
+
+    <div class="summary-row">
+      <span>Tax</span>
+      <span>$1</span>
+    </div>
+
+    <hr>
+
+    <div class="summary-row total">
+      <span>Total</span>
+      <span>$4</span>
+    </div>
+
   </div>
-
-  <div class="divider"></div>
-
-  <!-- PRICE -->
-  <div class="summary-row">
-    <span>Items:</span>
-    <span>$3.00</span>
-  </div>
-
-  <div class="summary-row">
-    <span>Shipping:</span>
-    <span>$0.00</span>
-  </div>
-
-  <div class="summary-row">
-    <span>Tax:</span>
-    <span>$1.00</span>
-  </div>
-
-  <div class="divider"></div>
-
-  <!-- TOTAL -->
-  <div class="summary-row total">
-    <span>Order total:</span>
-    <span>$4.00</span>
-  </div>
-
-  <!-- BUTTON -->
-  <button class="amazon-btn">Place your order</button>
-
-  <!-- TRUST -->
-  <div class="secure-box">
-    By placing your order, you agree to the terms.<br>
-    🔒 Secure transaction
-  </div>
-
-</div>
 
 </div>
 
