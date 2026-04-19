@@ -9,6 +9,13 @@
       margin: 0;
       font-family: Arial, sans-serif;
       background: #fff5f8;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    /* PAGE FADE OUT */
+    body.fade-out {
+      opacity: 0;
+      transform: scale(0.98);
     }
 
     header {
@@ -58,6 +65,30 @@
       border-radius: 15px;
       text-align: center;
       box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    /* CLICK RIPPLE EFFECT */
+    .card::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: rgba(255,77,166,0.2);
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .card:active::after {
+      opacity: 1;
     }
 
     .card img {
@@ -107,6 +138,12 @@
       border-radius: 5px;
       cursor: pointer;
       margin-top: 10px;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #e60073;
+      transform: scale(1.05);
     }
 
     footer {
@@ -138,9 +175,7 @@
 
   <!-- LIP GLOSS -->
   <div class="card">
-    <a href="liploss.html">
-      <img src="https://www.sephora.com/productimages/sku/s2643435-main-zoom.jpg?imwidth=400">
-    </a>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSy4dlkPpe_g2plWiHiItwpZ1EUu3OTYTViQ&s">
 
     <h3>Lip Gloss Set</h3>
 
@@ -155,7 +190,7 @@
     <div class="timer">Sale ends in: <span id="countdown"></span></div>
     <div class="stock" id="stock">Only 12 left in stock</div>
 
-    <button onclick="window.location.href='liploss.html'">View</button>
+    <button onclick="goToProduct('liploss.html')">View</button>
   </div>
 
 </div>
@@ -165,9 +200,22 @@
 </footer>
 
 <script>
-// RANDOM around 3 days (between ~2.5 and 3.5 days)
+// =========================
+// PAGE TRANSITION
+// =========================
+function goToProduct(url){
+  document.body.classList.add("fade-out");
+
+  setTimeout(() => {
+    window.location.href = url;
+  }, 400);
+}
+
+
+// =========================
+// COUNTDOWN TIMER
+// =========================
 let time = Math.floor(216000 + Math.random() * 86400);
-// 216000 = 2.5 days, + up to 1 extra day
 
 function updateTimer() {
   let days = Math.floor(time / 86400);
@@ -185,7 +233,11 @@ function updateTimer() {
 }
 
 setInterval(updateTimer, 1000);
-// FAKE STOCK DROPPER (looks dynamic)
+
+
+// =========================
+// FAKE STOCK DROPPER
+// =========================
 let stock = 12;
 
 setInterval(() => {
