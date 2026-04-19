@@ -11,8 +11,10 @@
   background:#f3f3f3;
 }
 
+h1,h2,h3{margin:0}
+
 /* ========================= */
-/* HEADER (UPGRADED) */
+/* HEADER */
 /* ========================= */
 .topbar{
   background:linear-gradient(90deg,#ff4da6,#cc0066);
@@ -77,7 +79,6 @@
   box-shadow:0 6px 18px rgba(0,0,0,.12);
 }
 
-/* DOTS */
 #dots{margin-top:10px}
 
 .dot{
@@ -209,7 +210,6 @@
   width:260px;
   border:1px solid #ddd;
   box-shadow:0 6px 18px rgba(0,0,0,.12);
-  position:static;
   transition:.2s;
 }
 
@@ -284,6 +284,55 @@
 }
 
 /* ========================= */
+/* REVIEW SUMMARY */
+/* ========================= */
+.review-summary{
+  display:flex;
+  gap:30px;
+  margin-bottom:20px;
+  align-items:center;
+}
+
+.summary-left{
+  text-align:center;
+}
+
+.big-rating{
+  font-size:40px;
+  font-weight:bold;
+}
+
+.total-reviews{
+  font-size:14px;
+  color:#555;
+}
+
+.summary-right{
+  flex:1;
+}
+
+.bar-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:14px;
+  margin:5px 0;
+}
+
+.bar{
+  flex:1;
+  height:8px;
+  background:#eee;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.bar div{
+  height:100%;
+  background:#ffa41c;
+}
+
+/* ========================= */
 /* REVIEWS */
 /* ========================= */
 .section{
@@ -302,17 +351,63 @@
   display:flex;
   gap:10px;
   align-items:center;
+  justify-content:space-between;
+}
+
+.avatar{
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  background:#ff4da6;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
 }
 
 .review-name{font-weight:bold}
+.review-date{font-size:12px;color:#777}
 .verified{color:#c45500;font-size:12px}
-.review-stars{color:#ffa41c;margin:5px 0}
-.review-title{font-weight:bold}
-.review-text{font-size:14px}
-.review-actions{font-size:12px;color:#555;margin-top:5px}
+
+.review-stars{
+  color:#ffa41c;
+  margin:5px 0;
+}
+
+.review-title{
+  font-weight:bold;
+}
+
+.review-text{
+  font-size:14px;
+}
+
+.review-img{
+  width:100%;
+  max-width:200px;
+  border-radius:8px;
+  margin-top:10px;
+}
+
+.review-actions{
+  margin-top:8px;
+}
+
+.review-actions button{
+  background:#f0f0f0;
+  border:none;
+  padding:6px 10px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.review-actions button:hover{
+  background:#ddd;
+}
 
 /* ========================= */
-/* SCROLL TO TOP BUTTON */
+/* SCROLL BUTTON */
 /* ========================= */
 #scrollTopBtn{
   position:fixed;
@@ -373,6 +468,11 @@
   }
 
   .review-text{font-size:13px}
+
+  .review-summary{
+    flex-direction:column;
+    align-items:flex-start;
+  }
 }
   </style>
   
@@ -591,7 +691,7 @@ function setImg(i){
   showImage();
 }
 
-// CREATE DOTS
+// DOTS
 const dotsContainer = document.getElementById("dots");
 
 images.forEach((_, i) => {
@@ -609,33 +709,28 @@ function updateDots(){
   });
 }
 
-// START
 showImage();
 
 
-  // =========================
-// DYNAMIC PRICE UPDATE
+// =========================
+// DYNAMIC PRICE
 // =========================
 const basePrice = 3.00;
-
 const quantitySelect = document.getElementById("quantity");
 const priceDisplay = document.getElementById("mainPrice");
 
-function updatePrice() {
+function updatePrice(){
   const qty = parseInt(quantitySelect.value);
   const total = (basePrice * qty).toFixed(2);
-
   priceDisplay.innerText = total;
 }
 
-// update when user changes quantity
 quantitySelect.addEventListener("change", updatePrice);
-
-// run once on page load
 updatePrice();
 
+
 // =========================
-// REVIEWS SYSTEM
+// REVIEW DATA
 // =========================
 const allReviews = [
   {name:"Jasmine R.",stars:5,title:"Amazing gloss!",text:"Super glossy and not sticky at all. Looks expensive!",verified:true},
@@ -652,10 +747,34 @@ const allReviews = [
 
 let reviewIndex = 0;
 
+
+// =========================
+// REVIEW HELPERS
+// =========================
 function renderStars(num){
   return "★".repeat(num) + "☆".repeat(5 - num);
 }
 
+function randomDate(){
+  const daysAgo = Math.floor(Math.random() * 60);
+  const date = new Date();
+  date.setDate(date.getDate() - daysAgo);
+
+  return date.toLocaleDateString(undefined,{
+    month:"long",
+    day:"numeric"
+  });
+}
+
+function markHelpful(btn){
+  btn.innerText = "✔ Helpful";
+  btn.disabled = true;
+}
+
+
+// =========================
+// LOAD REVIEWS
+// =========================
 function loadMoreReviews(){
   const container = document.getElementById("reviews");
 
@@ -669,13 +788,27 @@ function loadMoreReviews(){
 
     div.innerHTML = `
       <div class="review-header">
-        <span class="review-name">${r.name}</span>
-        ${r.verified ? `<span class="verified">✔ Verified Purchase</span>` : ""}
+        <div class="avatar">${r.name.charAt(0)}</div>
+
+        <div>
+          <div class="review-name">${r.name}</div>
+          <div class="review-date">Reviewed ${randomDate()}</div>
+        </div>
+
+        ${r.verified ? `<span class="verified">✔ Verified</span>` : ""}
       </div>
+
       <div class="review-stars">${renderStars(r.stars)}</div>
+
       <div class="review-title">${r.title}</div>
+
       <div class="review-text">${r.text}</div>
-      <div class="review-actions">Helpful 👍</div>
+
+      ${Math.random() > 0.6 ? `<img class="review-img" src="${images[Math.floor(Math.random()*images.length)]}">` : ""}
+
+      <div class="review-actions">
+        <button onclick="markHelpful(this)">👍 Helpful</button>
+      </div>
     `;
 
     container.appendChild(div);
@@ -683,12 +816,11 @@ function loadMoreReviews(){
   }
 }
 
-// LOAD FIRST REVIEWS
 loadMoreReviews();
 
 
 // =========================
-// DELIVERY DATE GENERATOR
+// DELIVERY DATE
 // =========================
 function getDeliveryDate(){
   const today = new Date();
@@ -707,7 +839,7 @@ document.getElementById("deliveryDate").innerText = getDeliveryDate();
 
 
 // =========================
-// SCROLL TO TOP BUTTON
+// SCROLL TO TOP
 // =========================
 const scrollBtn = document.getElementById("scrollTopBtn");
 
@@ -725,6 +857,37 @@ scrollBtn.onclick = () => {
     behavior: "smooth"
   });
 };
+
+
+// =========================
+// REVIEW SUMMARY (AUTO BUILD)
+// =========================
+function buildSummary(){
+  const section = document.querySelector("#reviews").parentElement;
+
+  const summary = document.createElement("div");
+  summary.className = "review-summary";
+
+  summary.innerHTML = `
+    <div class="summary-left">
+      <div class="big-rating">4.8</div>
+      <div class="stars">★★★★★</div>
+      <div class="total-reviews">1,284 reviews</div>
+    </div>
+
+    <div class="summary-right">
+      <div class="bar-row">5 ★ <div class="bar"><div style="width:90%"></div></div></div>
+      <div class="bar-row">4 ★ <div class="bar"><div style="width:7%"></div></div></div>
+      <div class="bar-row">3 ★ <div class="bar"><div style="width:2%"></div></div></div>
+      <div class="bar-row">2 ★ <div class="bar"><div style="width:1%"></div></div></div>
+      <div class="bar-row">1 ★ <div class="bar"><div style="width:0%"></div></div></div>
+    </div>
+  `;
+
+  section.insertBefore(summary, document.getElementById("reviews"));
+}
+
+buildSummary();
 </script>
 
 </body>
