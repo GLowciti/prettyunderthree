@@ -842,34 +842,32 @@ scrollBtn.onclick = () => {
 };
 
   function startCheckout(){
-  const messages = [
-    "Setting up secure payment request...",
-    "Encrypting your order...",
-    "Connecting to secure checkout...",
-    "Finalizing details...",
-    "Almost ready..."
-  ];
-
   const loader = document.getElementById("loadingScreen");
   const text = document.getElementById("loadingText");
 
   loader.classList.add("show");
 
-  let i = 0;
+  // Step-by-step messages (timed properly)
+  setTimeout(() => {
+    text.innerText = "Encrypting your order...";
+  }, 1000);
 
-  // Change text every ~600ms
-  const interval = setInterval(() => {
-    i++;
-    if(i < messages.length){
-      text.innerText = messages[i];
-    }
-  }, 600);
+  setTimeout(() => {
+    text.innerText = "Connecting to secure checkout...";
+  }, 2000);
+
+  setTimeout(() => {
+    text.innerText = "Finalizing payment session...";
+  }, 3000);
+
+  setTimeout(() => {
+    text.innerText = "Almost ready...";
+  }, 4000);
 
   // Redirect after full sequence
   setTimeout(() => {
-    clearInterval(interval);
     window.location.href = "checkout.html";
-  }, 3000); // total time
+  }, 5200);
 }
 
 // =========================
