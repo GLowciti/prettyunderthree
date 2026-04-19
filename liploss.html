@@ -1100,7 +1100,10 @@ scrollBtn.onclick = () => {
 // REVIEW SUMMARY (AUTO BUILD)
 // =========================
 function buildSummary(){
-  const section = document.querySelector("#reviews").parentElement;
+  const reviewsEl = document.getElementById("reviews");
+  if(!reviewsEl) return; // prevents crash
+
+  const section = reviewsEl.parentElement;
 
   const summary = document.createElement("div");
   summary.className = "review-summary";
@@ -1121,7 +1124,7 @@ function buildSummary(){
     </div>
   `;
 
-  section.insertBefore(summary, document.getElementById("reviews"));
+  section.insertBefore(summary, reviewsEl);
 }
 
 buildSummary();
