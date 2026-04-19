@@ -715,18 +715,58 @@ updatePrice();
 // =========================
 // REVIEW DATA
 // =========================
-const allReviews = [
-  {name:"Jasmine R.",stars:5,title:"Amazing gloss!",text:"Super glossy and not sticky at all. Looks expensive!",verified:true},
-  {name:"Mia T.",stars:5,title:"So shiny 💖",text:"Honestly feels like a luxury brand gloss.",verified:true},
-  {name:"Kayla S.",stars:4,title:"Pretty good",text:"Nice shine, lasts a decent time.",verified:true},
-  {name:"Aaliyah B.",stars:5,title:"Love it",text:"My lips look fuller instantly.",verified:true},
-  {name:"Brianna L.",stars:5,title:"Worth it",text:"Bought 2 sets already!",verified:true},
-  {name:"Sofia M.",stars:4,title:"Nice",text:"Good everyday gloss.",verified:false},
-  {name:"Emily K.",stars:5,title:"Perfect",text:"My go-to gloss now.",verified:true},
-  {name:"Zoe D.",stars:5,title:"Smells great",text:"Feels soft and smooth.",verified:false},
-  {name:"Nia W.",stars:4,title:"Pretty shades",text:"Love the nude one.",verified:true},
-  {name:"Hannah C.",stars:5,title:"Buying again",text:"Definitely recommend.",verified:true}
-];
+function generateReviews(count){
+  const names = [
+    "Jasmine","Mia","Kayla","Aaliyah","Brianna","Sofia","Emily","Zoe","Nia","Hannah",
+    "Ava","Isabella","Olivia","Amelia","Layla","Chloe","Aria","Scarlett","Nova","Luna",
+    "Madison","Grace","Victoria","Riley","Naomi","Elena","Ariana","Valerie","Faith","Ruby"
+  ];
+
+  const titles = [
+    "Amazing gloss!","So shiny 💖","Love it","Worth it","Pretty good",
+    "Actually surprised","Obsessed","Super cute","Nice everyday gloss",
+    "Feels expensive","My new favorite","10/10","Will buy again","So smooth"
+  ];
+
+  const texts = [
+    "Super glossy and not sticky at all.",
+    "Feels like a luxury brand honestly.",
+    "My lips look fuller instantly.",
+    "Lasts longer than I expected.",
+    "Really smooth and lightweight.",
+    "Perfect for everyday use.",
+    "I get compliments every time I wear it.",
+    "Smells really good too.",
+    "The shine is insane.",
+    "Doesn’t feel heavy at all.",
+    "Way better than I expected for the price.",
+    "Looks so good over lipstick.",
+    "Packaging is cute and small.",
+    "Hydrates my lips really well."
+  ];
+
+  const reviews = [];
+
+  for(let i=0;i<count;i++){
+    const name = names[Math.floor(Math.random()*names.length)];
+    const lastInitial = String.fromCharCode(65 + Math.floor(Math.random()*26));
+
+    const stars = Math.random() < 0.75 ? 5 : 4;
+
+    reviews.push({
+      name: `${name} ${lastInitial}.`,
+      stars: stars,
+      title: titles[Math.floor(Math.random()*titles.length)],
+      text: texts[Math.floor(Math.random()*texts.length)],
+      verified: Math.random() < 0.8
+    });
+  }
+
+  return reviews;
+}
+
+// Generate 300 reviews
+const allReviews = generateReviews(300);
 
 let reviewIndex = 0;
 
