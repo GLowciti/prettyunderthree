@@ -471,7 +471,9 @@
   <!-- BUY BOX -->
   <div class="right buy-box">
 
-  <div class="price-main" id="mainPrice">$3.00</div>
+  <div class="price-main">
+  $<span id="mainPrice">3.00</span>
+</div>
 
   <div class="delivery">
     FREE delivery <b id="deliveryDate"></b><br>
@@ -619,16 +621,17 @@ const basePrice = 3.00;
 const quantitySelect = document.getElementById("quantity");
 const priceDisplay = document.getElementById("mainPrice");
 
-function updatePrice(){
+function updatePrice() {
   const qty = parseInt(quantitySelect.value);
   const total = (basePrice * qty).toFixed(2);
-  priceDisplay.innerText = `$${total}`;
+
+  priceDisplay.innerText = total;
 }
 
-// run when quantity changes
+// update when user changes quantity
 quantitySelect.addEventListener("change", updatePrice);
 
-// run once on load
+// run once on page load
 updatePrice();
 
 // =========================
